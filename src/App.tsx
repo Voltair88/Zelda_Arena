@@ -10,7 +10,7 @@ const auth = getAuth();
 signInAnonymously(auth)
   .then(() => {
     console.log(auth.currentUser);
-    // Signed in..
+    // Signed in.. test
   })
   .catch((error) => {
     const errorCode = error.code;
