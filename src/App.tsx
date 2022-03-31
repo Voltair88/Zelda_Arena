@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { getAuth, signInAnonymously } from 'firebase/auth';
+import { firebaseConfig } from './firebase';
+import { initializeApp } from 'firebase/app';
+
+initializeApp(firebaseConfig);
+
+const auth = getAuth();
+signInAnonymously(auth)
+  .then(() => {
+    console.log(auth.currentUser);
+    // Signed in..
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // ...
+    console.log(errorCode, errorMessage);
+  });
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <p>Welcome to React!</p>
     </div>
   );
 }
