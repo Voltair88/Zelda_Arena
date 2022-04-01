@@ -1,7 +1,7 @@
 import React from 'react';
 import { auth, database } from '../Firebase/firebase';
-import { updateProfile, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { onAuthStateChanged } from 'firebase/auth';
+import { ref, set } from 'firebase/database';
 
 export default function Username() {
   const [name, setName] = React.useState<string>('');

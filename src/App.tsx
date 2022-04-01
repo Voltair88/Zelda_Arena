@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Username from './Components/username';
-import { auth } from './Firebase/firebase';
 
 function App() {
   return (

@@ -2,18 +2,12 @@ import firebaseConfig from './firebase.config';
 import { getAuth, signInAnonymously, onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref, set } from 'firebase/database';
-import { uniqueNamesGenerator, Config, names } from 'unique-names-generator';
+import characterName from '../Components/characterName';
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 export const auth: any = getAuth(firebaseApp);
 export const database = getDatabase(firebaseApp);
-
-const config: Config = {
-  dictionaries: [names],
-};
-
-const characterName: string = uniqueNamesGenerator(config);
 
 signInAnonymously(auth)
   .then(() => {
