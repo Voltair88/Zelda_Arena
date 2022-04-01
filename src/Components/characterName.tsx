@@ -1,5 +1,6 @@
 import { uniqueNamesGenerator, Config, names } from 'unique-names-generator';
 
+// random name generator
 const config: Config = {
   dictionaries: [names],
 };
