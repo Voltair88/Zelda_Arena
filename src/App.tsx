@@ -1,11 +1,10 @@
-import React from 'react';
 import './App.css';
-import Username from './Components/username';
+import Game from './Components/Game';
 
 function App() {
   return (
     <div className='App'>
-      <Username />
+      <Game />
     </div>
   );
 }
