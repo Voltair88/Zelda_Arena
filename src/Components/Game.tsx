@@ -3,7 +3,7 @@ import { OrbitControls, Sky } from '@react-three/drei';
 import { Physics } from '@react-three/cannon';
 import { Suspense } from 'react';
 import Plane from './Plane';
-import Car from './Car';
+import Jeep from './Jeep';
 
 export default function Game(props: any) {
   return (
@@ -11,18 +11,16 @@ export default function Game(props: any) {
       <Suspense fallback={null}>
         <Physics>
           <Plane />
-          <Car />
-
+          <Jeep />
           <Sky
             distance={450000}
-            sunPosition={[0, 1, 0]}
+            sunPosition={[500, 500, 500]}
             inclination={0}
             azimuth={0.25}
             {...props}
           />
           <OrbitControls />
-          <ambientLight />
-          <spotLight position={[10, 10, 10]} />
+          <ambientLight intensity={0.3} />
         </Physics>
       </Suspense>
     </Canvas>
