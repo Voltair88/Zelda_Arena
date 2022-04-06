@@ -3,6 +3,7 @@ import { OrbitControls, Sky } from '@react-three/drei';
 import { Physics } from '@react-three/cannon';
 import { Suspense } from 'react';
 import Plane from './Plane';
+import Car from './Car';
 
 export default function Game(props: any) {
   return (
@@ -10,6 +11,8 @@ export default function Game(props: any) {
       <Suspense fallback={null}>
         <Physics>
           <Plane />
+          <Car />
+
           <Sky
             distance={450000}
             sunPosition={[0, 1, 0]}
