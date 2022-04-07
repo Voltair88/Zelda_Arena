@@ -1,9 +1,8 @@
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Sky } from '@react-three/drei';
-import { Physics, useBox } from '@react-three/cannon';
+import { Physics } from '@react-three/cannon';
 import { Suspense } from 'react';
 import Jeep from './Jeep';
-import Arena from './Arena';
 import Plane from './Plane';
 
 export default function Game(props: any) {
