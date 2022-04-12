@@ -28,7 +28,7 @@ type GLTFResult = GLTF & {
 
 const SPEED = 6;
 
-export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
+export default function Jeep({ ...props }: JSX.IntrinsicElements['group']) {
   const group = React.useRef<THREE.Group>();
   const { camera } = useThree();
   const { moveForward, moveBackward, moveLeft, moveRight } =
@@ -77,8 +77,9 @@ export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
       >
         <pointLight intensity={10} />
       </group>
-      <mesh ref={ref}>
-        <group scale={[0.67, 1, 1]} position={[0, 0, 0]}>
+
+      <group scale={[0.67, 1, 1]} position={[0, 0.1, 0]}>
+        <mesh ref={ref}>
           <mesh geometry={nodes.Cube002.geometry} material={materials.beige} />
           <mesh geometry={nodes.Cube002_1.geometry} material={materials.dark} />
           <mesh geometry={nodes.Cube002_2.geometry} material={materials.red} />
@@ -94,8 +95,8 @@ export default function Model({ ...props }: JSX.IntrinsicElements['group']) {
             geometry={nodes.Cube002_5.geometry}
             material={materials.orange}
           />
-        </group>
-      </mesh>
+        </mesh>
+      </group>
     </group>
   );
 }
