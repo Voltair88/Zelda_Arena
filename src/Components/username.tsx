@@ -6,6 +6,7 @@ import { ref, set } from 'firebase/database';
 // function to change the name of the player
 
 export default function Username() {
+  // uses the useState hook to set the username
   const [name, setName] = React.useState<string>('');
 
   // handles the change of the name
@@ -33,13 +34,13 @@ export default function Username() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label title='Name'>
           Name:
           <input
             type='text'
             name='name'
             value={name}
-            maxLength={10}
+            maxLength={20}
             onChange={handleName}
           />
         </label>
