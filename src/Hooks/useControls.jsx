@@ -19,7 +19,5 @@ export function useControls() {
   useKeyPress(['ArrowDown', 's'], (pressed) => (keys.current.backward = pressed))
   useKeyPress(['ArrowLeft', 'a'], (pressed) => (keys.current.left = pressed))
   useKeyPress(['ArrowRight', 'd'], (pressed) => (keys.current.right = pressed))
-  useKeyPress([' '], (pressed) => (keys.current.brake = pressed))
-  useKeyPress(['r'], (pressed) => (keys.current.reset = pressed))
   return keys
 }

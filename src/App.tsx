@@ -5,6 +5,8 @@ function App() {
   return (
     <div className='App'>
       <Username />
+      <div id='Highscore' />
+      <div className='Game'></div>
     </div>
   );
 }
