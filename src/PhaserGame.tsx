@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import Preloader from './scenes/Preloader';
-import Game from './scenes/Game';
+import Preloader from './Scenes/Preloader';
+import Game from './Scenes/Game';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -9,8 +9,8 @@ const config: Phaser.Types.Core.GameConfig = {
   scale: {
     autoCenter: Phaser.Scale.CENTER_BOTH,
     width: 800,
-    height: 600,
-    zoom: 2,
+    height: 500,
+    zoom: 1.5,
   },
   physics: {
     default: 'arcade',
