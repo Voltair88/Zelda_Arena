@@ -14,8 +14,14 @@ export default class Game extends Phaser.Scene
 
         create() 
         {
-           const map = this.make.tilemap({ key: "map" });
-           map.addTilesetImage('map', 'tiles');
+            const { width, height } = this.scale;
+           const map = this.make.tilemap({ key: "dungeon" });
+           const tileset = map.addTilesetImage('dungeon', 'tiles');
+
+           map.addTilesetImage('dungeon', 'tiles');
+
+           map.createLayer('Floor', tileset);
+           map.createLayer('Walls', tileset);
         }
 
     }

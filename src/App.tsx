@@ -12,7 +12,6 @@ function App() {
     <div className='App'>
       <header>
         <Username />
-        <Highscore />
       </header>
     </div>
   );
