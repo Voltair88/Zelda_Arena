@@ -10,12 +10,10 @@ AuthStateChanged();
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
+      <header>
         <Username />
         <Highscore />
       </header>
-      <div id='Highscore' />
-      <div className='Game'></div>
     </div>
   );
 }
