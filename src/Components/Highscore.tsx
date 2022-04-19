@@ -1,7 +1,5 @@
-import { onValue, ref } from 'firebase/database';
-import { database } from '../Firebase/firebase';
-
-const allPlayersRef = ref(database, 'players');
+import { onValue } from 'firebase/database';
+import { allPlayersRef } from '../Firebase/firebase';
 
 export default function Highscore() {
   onValue(allPlayersRef, (snapshot) => {
@@ -12,7 +10,6 @@ export default function Highscore() {
     const allPlayersSorted = allPlayersArray.sort((a, b) => {
       return b.score - a.score;
     });
-
     const highScores = document.getElementById('Highscore') as HTMLElement;
     highScores.innerHTML = '';
     allPlayersSorted.forEach((player) => {

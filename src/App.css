@@ -2,7 +2,6 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: lightblue;
 }
 
 .Game {
@@ -10,7 +9,6 @@ html, body {
   top: 20vh;
   width: 620px;
   height: 350px;
-  background: url(/public/gamemap.png) no-repeat center center fixed;
   transform: scale(1.5);
   image-rendering: pixelated;
 }
