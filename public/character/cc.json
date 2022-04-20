@@ -1,0 +1,31 @@
+{
+	"generator_info": "Shape definitions generated with PhysicsEditor. Visit https://www.codeandweb.com/physicseditor",
+	"walk-down-1": {
+		"type": "fromPhysicsEditor",
+		"label": "walk-down-1",
+		"isStatic": false,
+		"density": 0.10000000149011612,
+		"restitution": 0,
+		"friction": 0.10000000149011612,
+		"frictionAir": 0.009999999776482582,
+		"frictionStatic": 0.5,
+		"collisionFilter": {
+			"group": 0,
+			"category": 1,
+			"mask": 255
+		},
+		"fixtures": [
+			{
+				"label": "",
+				"isSensor": false,
+				"vertices": [
+					[ { "x":10, "y":8 }, { "x":8, "y":10 }, { "x":8, "y":13 }, { "x":10, "y":14 }, { "x":11, "y":10 } ],
+					[ { "x":22, "y":8 }, { "x":21, "y":10 }, { "x":22, "y":14 }, { "x":24, "y":13 }, { "x":24, "y":10 } ],
+					[ { "x":9, "y":26 }, { "x":16, "y":26 }, { "x":22, "y":22 }, { "x":22, "y":14 }, { "x":21, "y":10 }, { "x":11, "y":10 }, { "x":8, "y":22 } ],
+					[ { "x":17, "y":29 }, { "x":19, "y":29 }, { "x":21, "y":27 }, { "x":22, "y":22 }, { "x":16, "y":26 } ],
+					[ { "x":24, "y":21 }, { "x":24, "y":16 }, { "x":22, "y":14 }, { "x":22, "y":22 } ]
+				]
+			}
+		]
+	}
+}

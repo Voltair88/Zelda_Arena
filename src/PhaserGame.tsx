@@ -4,10 +4,11 @@ import Game from './Scenes/Game';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 500,
+  width: 370,
   height: 200,
   parent: 'phaser-container',
   backgroundColor: '#282c34',
+  pixelArt: true,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -16,6 +17,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: 'arcade',
     arcade: {
       gravity: { y: 0 },
+      debug: true,
     },
   },
   scene: [Preloader, Game],
