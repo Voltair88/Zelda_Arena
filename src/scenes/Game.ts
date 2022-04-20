@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 import debugDraw from '../utils/debug';
+
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private character!: Phaser.Physics.Arcade.Sprite;
@@ -13,7 +14,6 @@ export default class Game extends Phaser.Scene {
     this.load.path = 'character/';
     this.load.atlas('character', 'character.png', 'character.json');
     this.cursors = this.input.keyboard.createCursorKeys();
-    this.load.json('cc', 'character/cc.json');
   }
 
   create() {
@@ -22,7 +22,6 @@ export default class Game extends Phaser.Scene {
     const tileset = map.addTilesetImage('dungeon', 'tiles');
     const floorLayer = map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
-    const cc = this.cache.json.get('cc');
     // create the player
     this.character = this.physics.add.sprite(100, 100, 'character');
     this.character.body.setSize(16, 22);
