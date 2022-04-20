@@ -1,13 +1,18 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 import debugDraw from '../utils/debug';
-
+import playerAnims from '../Anim/Player';
+import controls from './controls';
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private character!: Phaser.Physics.Arcade.Sprite;
 
   constructor() {
     super({ key: 'Game' });
+  }
+
+  init() {
+    this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   preload() {
@@ -22,119 +27,14 @@ export default class Game extends Phaser.Scene {
     const tileset = map.addTilesetImage('dungeon', 'tiles');
     const floorLayer = map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
+    const decorationLayer = map.createLayer('Decoration', tileset);
+
     // create the player
     this.character = this.physics.add.sprite(100, 100, 'character');
     this.character.body.setSize(16, 22);
 
-    // create player animations
-
-    this.anims.create({
-      key: 'idle-down',
-      frames: [
-        {
-          key: 'character',
-          frame: 'sprites/walk-down/walk-down-3.png',
-        },
-      ],
-    });
-
-    this.anims.create({
-      key: 'idle-walk-up',
-      frames: [
-        {
-          key: 'character',
-          frame: 'sprites/walk-up/walk-up-3.png',
-        },
-      ],
-    });
-
-    this.anims.create({
-      key: 'idle-side',
-      frames: [
-        {
-          key: 'character',
-          frame: 'sprites/walk-side/walk-side-3.png',
-        },
-      ],
-    });
-
-    this.anims.create({
-      key: 'walk-down',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/walk-down/walk-down-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'walk-up',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/walk-up/walk-up-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'walk-side',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/walk-side/walk-side-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'run-down',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/run-down/run-down-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'run-up',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/run-up/run-up-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
-
-    this.anims.create({
-      key: 'run-side',
-      frames: this.anims.generateFrameNames('character', {
-        prefix: 'sprites/run-side/run-side-',
-        suffix: '.png',
-        start: 1,
-        end: 8,
-        zeroPad: 0,
-      }),
-      frameRate: 10,
-      repeat: -1,
-    });
+    // Load player animations
+    playerAnims(this.anims);
 
     this.character.anims.play('idle-down');
 
