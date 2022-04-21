@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 import debugDraw from '../utils/debug';
-import playerAnims from '../Anim/Player';
+import playerAnims from '../Animations/Player';
 import {
   AnimatedTile,
   TileAnimationData,
   TilesetTileData,
-} from './AnimatedTile';
+} from '../utils/AnimatedTile';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -24,7 +24,7 @@ export default class Game extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.path = 'character/';
+    this.load.path = 'Assets/character/';
     this.load.atlas('character', 'character.png', 'character.json');
     this.cursors = this.input.keyboard.createCursorKeys();
   }
