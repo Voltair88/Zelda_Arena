@@ -11,8 +11,8 @@ export default class Preloader extends Phaser.Scene {
 
     this.load.atlas(
       'character',
-      'Assets/character/character.png',
-      'Assets/character/character.json'
+      'Assets/character/Zelda.png',
+      'Assets/character/Zelda.json'
     );
   }
 

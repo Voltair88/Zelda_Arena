@@ -8,27 +8,36 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     frames: [
       {
         key: 'character',
-        frame: 'sprites/walk-down/walk-down-3.png',
+        frame: 'idle-down.png',
       },
     ],
   });
 
   anims.create({
-    key: 'idle-walk-up',
+    key: 'idle-up',
     frames: [
       {
         key: 'character',
-        frame: 'sprites/walk-up/walk-up-3.png',
+        frame: 'idle-up.png',
       },
     ],
   });
 
   anims.create({
-    key: 'idle-side',
+    key: 'idle-left',
     frames: [
       {
         key: 'character',
-        frame: 'sprites/walk-side/walk-side-3.png',
+        frame: 'idle-left.png',
+      },
+    ],
+  });
+  anims.create({
+    key: 'idle-right',
+    frames: [
+      {
+        key: 'character',
+        frame: 'idle-right.png',
       },
     ],
   });
@@ -36,7 +45,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
   anims.create({
     key: 'walk-down',
     frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/walk-down/walk-down-',
+      prefix: 'walking-down-',
       suffix: '.png',
       start: 1,
       end: 8,
@@ -49,7 +58,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
   anims.create({
     key: 'walk-up',
     frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/walk-up/walk-up-',
+      prefix: 'walking-up-',
       suffix: '.png',
       start: 1,
       end: 8,
@@ -60,9 +69,9 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
 
   anims.create({
-    key: 'walk-side',
+    key: 'walk-right',
     frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/walk-side/walk-side-',
+      prefix: 'walking-right-',
       suffix: '.png',
       start: 1,
       end: 8,
@@ -71,37 +80,10 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     frameRate: 10,
     repeat: -1,
   });
-
   anims.create({
-    key: 'run-down',
+    key: 'walk-left',
     frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/run-down/run-down-',
-      suffix: '.png',
-      start: 1,
-      end: 8,
-      zeroPad: 0,
-    }),
-    frameRate: 10,
-    repeat: -1,
-  });
-
-  anims.create({
-    key: 'run-up',
-    frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/run-up/run-up-',
-      suffix: '.png',
-      start: 1,
-      end: 8,
-      zeroPad: 0,
-    }),
-    frameRate: 10,
-    repeat: -1,
-  });
-
-  anims.create({
-    key: 'run-side',
-    frames: anims.generateFrameNames('character', {
-      prefix: 'sprites/run-side/run-side-',
+      prefix: 'walking-left-',
       suffix: '.png',
       start: 1,
       end: 8,
@@ -111,5 +93,4 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: -1,
   });
 };
-
 export default playerAnims;

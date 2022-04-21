@@ -1,7 +1,7 @@
 /* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
-import debugDraw from '../utils/debug';
+// import debugDraw from '../utils/debug';
 import playerAnims from '../Animations/Player';
 import {
   AnimatedTile,
@@ -39,7 +39,8 @@ export default class Game extends Phaser.Scene {
 
     // create the player
     this.character = this.physics.add.sprite(100, 100, 'character');
-    this.character.body.setSize(16, 22);
+    this.character.body.setSize(16, 16);
+    this.character.body.offset.y = 16;
 
     // Load player animations
     playerAnims(this.anims);
@@ -50,9 +51,11 @@ export default class Game extends Phaser.Scene {
     wallsLayer.setCollisionByProperty({ collision: true });
 
     // debug draw
+
     // debugDraw(wallsLayer, this);
 
     this.physics.add.collider(this.character, wallsLayer);
+
     // set the camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.character);
@@ -60,13 +63,12 @@ export default class Game extends Phaser.Scene {
 
     // create animated tiles
     // loop through every tile and check if its id is animated tile's id
+
     const tileData = tileset.tileData as TilesetTileData;
     for (const tileid in tileData) {
       map.layers.forEach((layer) => {
         layer.data.forEach((tileRow) => {
           tileRow.forEach((tile) => {
-            // Typically `firstgid` is 1, which means tileid starts from 1.
-            // Tiled's tileid starts from 0.
             if (tile.index - tileset.firstgid === parseInt(tileid)) {
               this.animatedTiles.push(
                 new AnimatedTile(
@@ -93,22 +95,21 @@ export default class Game extends Phaser.Scene {
         this.character.anims.play('walk-down', true);
         this.character.setVelocity(0, 100);
       } else if (this.cursors.left.isDown) {
-        this.character.anims.play('walk-side', true);
+        this.character.anims.play('walk-left', true);
         this.character.setVelocity(-100, 0);
-        this.character.flipX = true;
       } else if (this.cursors.right.isDown) {
-        this.character.anims.play('walk-side', true);
+        this.character.anims.play('walk-right', true);
         this.character.setVelocity(100, 0);
-        this.character.scaleX = 1;
-        this.character.flipX = false;
       } else {
         // put the character in idle state
         if (this.character.anims.currentAnim.key === 'walk-down')
           this.character.anims.play('idle-down', true);
         else if (this.character.anims.currentAnim.key === 'walk-up')
-          this.character.anims.play('idle-walk-up', true);
-        else if (this.character.anims.currentAnim.key === 'walk-side')
-          this.character.anims.play('idle-side', true);
+          this.character.anims.play('idle-up', true);
+        else if (this.character.anims.currentAnim.key === 'walk-left')
+          this.character.anims.play('idle-left', true);
+        else if (this.character.anims.currentAnim.key === 'walk-right')
+          this.character.anims.play('idle-right', true);
         this.character.setVelocity(0, 0);
       }
     }
