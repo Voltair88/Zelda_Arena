@@ -1,33 +1,41 @@
+/* eslint-disable no-prototype-builtins */
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 import debugDraw from '../utils/debug';
 import playerAnims from '../Anim/Player';
-import controls from './controls';
+import {
+  AnimatedTile,
+  TileAnimationData,
+  TilesetTileData,
+} from './AnimatedTile';
+
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private character!: Phaser.Physics.Arcade.Sprite;
+  private animatedTiles!: AnimatedTile[];
 
   constructor() {
     super({ key: 'Game' });
   }
 
-  init() {
+  public init(): void {
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.animatedTiles = [];
   }
 
-  preload() {
+  public preload(): void {
     this.load.path = 'character/';
     this.load.atlas('character', 'character.png', 'character.json');
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
-  create() {
-    // create the map
+  public create(): void {
     const map = this.make.tilemap({ key: 'dungeon' });
     const tileset = map.addTilesetImage('dungeon', 'tiles');
-    const floorLayer = map.createLayer('Floor', tileset);
+    map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
-    const decorationLayer = map.createLayer('Decoration', tileset);
+    map.createLayer('Walls_Over', tileset);
+    map.createLayer('Decoration', tileset);
 
     // create the player
     this.character = this.physics.add.sprite(100, 100, 'character');
@@ -42,16 +50,41 @@ export default class Game extends Phaser.Scene {
     wallsLayer.setCollisionByProperty({ collision: true });
 
     // debug draw
-    debugDraw(wallsLayer, this);
+    // debugDraw(wallsLayer, this);
 
     this.physics.add.collider(this.character, wallsLayer);
     // set the camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.character);
     this.cameras.main.roundPixels = true;
+
+    // create animated tiles
+    // loop through every tile and check if its id is animated tile's id
+    const tileData = tileset.tileData as TilesetTileData;
+    for (const tileid in tileData) {
+      map.layers.forEach((layer) => {
+        layer.data.forEach((tileRow) => {
+          tileRow.forEach((tile) => {
+            // Typically `firstgid` is 1, which means tileid starts from 1.
+            // Tiled's tileid starts from 0.
+            if (tile.index - tileset.firstgid === parseInt(tileid)) {
+              this.animatedTiles.push(
+                new AnimatedTile(
+                  tile,
+                  tileData[tileid].animation as TileAnimationData,
+                  tileset.firstgid
+                )
+              );
+            }
+          });
+        });
+      });
+    }
   }
 
-  update(time: number, delta: number) {
+  public update(time: number, delta: number): void {
+    this.animatedTiles.forEach((tile) => tile.update(delta));
+
     if (this.cursors) {
       if (this.cursors.up.isDown) {
         this.character.anims.play('walk-up', true);

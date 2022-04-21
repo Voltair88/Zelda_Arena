@@ -4,14 +4,15 @@ import Highscore from './Components/Highscore';
 import AuthStateChanged from './Firebase/AuthStateChanged';
 import signIn from './Firebase/signInAnonymously';
 
-signIn();
+/* signIn();
 AuthStateChanged();
-
+ */
 function App() {
   return (
     <div className='App'>
       <header>
-        <Username />
+        {/*         <Username />
+         */}{' '}
       </header>
     </div>
   );

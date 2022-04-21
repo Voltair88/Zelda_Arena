@@ -9,6 +9,8 @@ const config: Phaser.Types.Core.GameConfig = {
   parent: 'phaser-container',
   backgroundColor: '#282c34',
   pixelArt: true,
+  roundPixels: true,
+  antialiasGL: false,
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
@@ -17,7 +19,7 @@ const config: Phaser.Types.Core.GameConfig = {
     default: 'arcade',
     arcade: {
       gravity: { y: 0 },
-      debug: true,
+      debug: false,
     },
   },
   scene: [Preloader, Game],

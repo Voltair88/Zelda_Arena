@@ -326,8 +326,8 @@
          "x":0,
          "y":0
         }],
- "nextlayerid":6,
- "nextobjectid":2,
+ "nextlayerid":8,
+ "nextobjectid":5,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.8.4",
@@ -14558,19 +14558,6 @@
                          "value":false
                         }]
                 }],
-         "tilewidth":16
-        }, 
-        {
-         "columns":29,
-         "firstgid":4097,
-         "image":"C:\/Users\/volta\/Downloads\/legend of faune files\/legend of faune files\/Environment\/PNG\/tiles.png",
-         "imageheight":256,
-         "imagewidth":464,
-         "margin":0,
-         "name":"tiles",
-         "spacing":0,
-         "tilecount":464,
-         "tileheight":16,
          "tilewidth":16
         }],
  "tilewidth":16,
