@@ -87,17 +87,26 @@ export default class Game extends Phaser.Scene {
   public update(time: number, delta: number): void {
     this.animatedTiles.forEach((tile) => tile.update(delta));
 
-    if (this.cursors) {
-      if (this.cursors.up.isDown) {
+    if (this.input.keyboard) {
+      if (this.input.keyboard.addKey('W').isDown || this.cursors.up.isDown) {
         this.character.anims.play('walk-up', true);
         this.character.setVelocity(0, -100);
-      } else if (this.cursors.down.isDown) {
+      } else if (
+        this.input.keyboard.addKey('S').isDown ||
+        this.cursors.down.isDown
+      ) {
         this.character.anims.play('walk-down', true);
         this.character.setVelocity(0, 100);
-      } else if (this.cursors.left.isDown) {
+      } else if (
+        this.input.keyboard.addKey('A').isDown ||
+        this.cursors.left.isDown
+      ) {
         this.character.anims.play('walk-left', true);
         this.character.setVelocity(-100, 0);
-      } else if (this.cursors.right.isDown) {
+      } else if (
+        this.input.keyboard.addKey('D').isDown ||
+        this.cursors.right.isDown
+      ) {
         this.character.anims.play('walk-right', true);
         this.character.setVelocity(100, 0);
       } else {

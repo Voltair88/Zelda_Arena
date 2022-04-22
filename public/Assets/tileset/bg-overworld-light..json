@@ -1,0 +1,14 @@
+{ "columns":256,
+ "image":"..\/..\/..\/..\/bg-overworld-light.png",
+ "imageheight":5136,
+ "imagewidth":4110,
+ "margin":0,
+ "name":"bg-overworld-light",
+ "spacing":0,
+ "tilecount":82176,
+ "tiledversion":"1.8.4",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.8"
+}

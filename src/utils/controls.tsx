@@ -9,16 +9,16 @@ const controls = (scene: Phaser.Scene) => {
     Phaser.Input.Keyboard.KeyCodes.X
   );
   const leftButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.LEFT
+    Phaser.Input.Keyboard.KeyCodes.A
   );
   const rightButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.RIGHT
+    Phaser.Input.Keyboard.KeyCodes.D
   );
   const upButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.UP
+    Phaser.Input.Keyboard.KeyCodes.W
   );
   const downButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.DOWN
+    Phaser.Input.Keyboard.KeyCodes.S
   );
 
   return {
