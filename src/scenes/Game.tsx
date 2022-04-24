@@ -30,14 +30,20 @@ export default class Game extends Phaser.Scene {
   }
 
   public create(): void {
-    const map = this.make.tilemap({ key: 'dungeon' });
+    const map = this.make.tilemap({ key: 'bg-overworld-light' });
+    const tileset = map.addTilesetImage(
+      'bg-overworld-light',
+      'bg-overworld-light'
+    );
+    map.createLayer('Layer1', tileset);
+
+    /*     const map = this.make.tilemap({ key: 'dungeon' });
     const tileset = map.addTilesetImage('dungeon', 'tiles');
     map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
     map.createLayer('Walls_Over', tileset);
     map.createLayer('Decoration', tileset);
-
-    // create the player
+ */ // create the player
     this.character = this.physics.add.sprite(100, 100, 'character');
     this.character.body.setSize(16, 16);
     this.character.body.offset.y = 16;
@@ -48,13 +54,13 @@ export default class Game extends Phaser.Scene {
     this.character.anims.play('idle-down');
 
     // create collision
-    wallsLayer.setCollisionByProperty({ collision: true });
+    // wallsLayer.setCollisionByProperty({ collision: true });
 
     // debug draw
 
     // debugDraw(wallsLayer, this);
 
-    this.physics.add.collider(this.character, wallsLayer);
+    // this.physics.add.collider(this.character, wallsLayer);
 
     // set the camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);

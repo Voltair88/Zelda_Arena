@@ -6,10 +6,17 @@ export default class Preloader extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('tiles', 'Assets/tileset/dungeontileset.png');
+    this.load.image(
+      'bg-overworld-light',
+      'Assets/tileset/bg-overworld-light.png'
+    );
+    this.load.tilemapTiledJSON(
+      'bg-overworld-light',
+      'Assets/map/bg-overworld-light.json'
+    );
+    /*    this.load.image('tiles', 'Assets/tileset/dungeontileset.png');
     this.load.tilemapTiledJSON('dungeon', 'Assets/map/dungeon.json');
-
-    this.load.atlas(
+ */ this.load.atlas(
       'character',
       'Assets/character/Zelda.png',
       'Assets/character/Zelda.json'
