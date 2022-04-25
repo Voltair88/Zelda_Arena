@@ -10,6 +10,7 @@ export default class Preloader extends Phaser.Scene {
       'bg-overworld-light',
       'Assets/tileset/bg-overworld-light.png'
     );
+    this.load.image('tiles', 'Assets/tileset/light_world.png');
     this.load.tilemapTiledJSON(
       'bg-overworld-light',
       'Assets/map/bg-overworld-light.json'

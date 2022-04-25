@@ -31,11 +31,9 @@ export default class Game extends Phaser.Scene {
 
   public create(): void {
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
-    const tileset = map.addTilesetImage(
-      'bg-overworld-light',
-      'bg-overworld-light'
-    );
-    map.createLayer('Layer1', tileset);
+    const tileset = map.addTilesetImage('light_world', 'tiles');
+    map.createLayer('Floor', tileset);
+    const wallsLayer = map.createLayer('test', tileset);
 
     /*     const map = this.make.tilemap({ key: 'dungeon' });
     const tileset = map.addTilesetImage('dungeon', 'tiles');
@@ -54,13 +52,13 @@ export default class Game extends Phaser.Scene {
     this.character.anims.play('idle-down');
 
     // create collision
-    // wallsLayer.setCollisionByProperty({ collision: true });
+    wallsLayer.setCollisionByProperty({ collision: true });
 
     // debug draw
 
     // debugDraw(wallsLayer, this);
 
-    // this.physics.add.collider(this.character, wallsLayer);
+    this.physics.add.collider(this.character, wallsLayer);
 
     // set the camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
