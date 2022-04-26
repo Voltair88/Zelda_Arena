@@ -68,7 +68,7 @@ export default class Game extends Phaser.Scene {
 
     // Load enemy animations
     greenSoldierAnims(this.anims);
-    enemy.anims.play('green-down');
+    enemy.anims.play('green-idle-down');
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
