@@ -1,0 +1,107 @@
+{
+  "frames": [
+    {
+      "filename": "green_soldier_down_2",
+      "frame": { "x": 0, "y": 35, "w": 22, "h": 33 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 33 },
+      "sourceSize": { "w": 22, "h": 33 }
+    },
+    {
+      "filename": "green_soldier_up_2",
+      "frame": { "x": 0, "y": 0, "w": 22, "h": 33 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 33 },
+      "sourceSize": { "w": 22, "h": 33 }
+    },
+    {
+      "filename": "green_soldier_down_1",
+      "frame": { "x": 82, "y": 60, "w": 22, "h": 35 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 35 },
+      "sourceSize": { "w": 22, "h": 35 }
+    },
+    {
+      "filename": "green_soldier_dead",
+      "frame": { "x": 82, "y": 36, "w": 22, "h": 22 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 22 },
+      "sourceSize": { "w": 22, "h": 22 }
+    },
+    {
+      "filename": "green_soldier_up_1",
+      "frame": { "x": 0, "y": 70, "w": 22, "h": 26 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 26 },
+      "sourceSize": { "w": 22, "h": 26 }
+    },
+    {
+      "filename": "green_soldier_down_3",
+      "frame": { "x": 58, "y": 29, "w": 22, "h": 38 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 38 },
+      "sourceSize": { "w": 22, "h": 38 }
+    },
+    {
+      "filename": "green_soldier_down_4",
+      "frame": { "x": 82, "y": 0, "w": 22, "h": 34 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 34 },
+      "sourceSize": { "w": 22, "h": 34 }
+    },
+    {
+      "filename": "green_soldier_side_2",
+      "frame": { "x": 24, "y": 0, "w": 32, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 27 },
+      "sourceSize": { "w": 32, "h": 27 }
+    },
+    {
+      "filename": "green_soldier_up_3",
+      "frame": { "x": 58, "y": 0, "w": 22, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 27 },
+      "sourceSize": { "w": 22, "h": 27 }
+    },
+    {
+      "filename": "green_soldier_side_1",
+      "frame": { "x": 24, "y": 70, "w": 29, "h": 26 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 29, "h": 26 },
+      "sourceSize": { "w": 29, "h": 26 }
+    },
+    {
+      "filename": "green_soldier_side_3",
+      "frame": { "x": 24, "y": 35, "w": 29, "h": 27 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 29, "h": 27 },
+      "sourceSize": { "w": 29, "h": 27 }
+    },
+    {
+      "filename": "green_soldier_up_4",
+      "frame": { "x": 55, "y": 70, "w": 22, "h": 26 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 22, "h": 26 },
+      "sourceSize": { "w": 22, "h": 26 }
+    }
+  ],
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "spritesheet.png",
+    "size": { "w": 104, "h": 96 },
+    "scale": 1
+  }
+}

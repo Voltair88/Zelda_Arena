@@ -30,21 +30,26 @@ export default class Game extends Phaser.Scene {
   }
 
   public create(): void {
+    // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
     const tileset = map.addTilesetImage('light_world', 'tiles');
-    map.createLayer('Floor', tileset);
-    const wallsLayer = map.createLayer('test', tileset);
-
-    /*     const map = this.make.tilemap({ key: 'dungeon' });
-    const tileset = map.addTilesetImage('dungeon', 'tiles');
+    // load the diffrent layers from tiled
     map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
-    map.createLayer('Walls_Over', tileset);
-    map.createLayer('Decoration', tileset);
- */ // create the player
-    this.character = this.physics.add.sprite(100, 100, 'character');
+    map.createLayer('Floor_decoration', tileset);
+    const obstaclesLayer = map.createLayer('obstacles', tileset);
+    // create the player
+    this.character = this.physics.add.sprite(60, 80, 'character');
     this.character.body.setSize(16, 16);
     this.character.body.offset.y = 16;
+
+    // load in the enemy
+    const enemy = this.add.sprite(
+      150,
+      150,
+      'green_soldier',
+      'green_soldier_down_1'
+    );
 
     // Load player animations
     playerAnims(this.anims);
@@ -53,12 +58,14 @@ export default class Game extends Phaser.Scene {
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
+    obstaclesLayer.setCollisionByProperty({ collision: true });
 
     // debug draw
 
     // debugDraw(wallsLayer, this);
 
     this.physics.add.collider(this.character, wallsLayer);
+    this.physics.add.collider(this.character, obstaclesLayer);
 
     // set the camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -66,7 +73,7 @@ export default class Game extends Phaser.Scene {
     this.cameras.main.roundPixels = true;
 
     // create animated tiles
-    // loop through every tile and check if its id is animated tile's id
+    // loop through every tile and check if its id is in the animated tile's array
 
     const tileData = tileset.tileData as TilesetTileData;
     for (const tileid in tileData) {
