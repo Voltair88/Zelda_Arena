@@ -1,21 +1,8 @@
 import './App.css';
-import Username from './Components/username';
-import Highscore from './Components/Highscore';
-import AuthStateChanged from './Firebase/AuthStateChanged';
-import signIn from './Firebase/signInAnonymously';
+import './Scenes/PhaserGame';
 
-/* signIn();
-AuthStateChanged();
- */
 function App() {
-  return (
-    <div className='App'>
-      {/*       <header>
-         <Username />
-         
-      </header> */}
-    </div>
-  );
+  return <div className='App'></div>;
 }
 
 export default App;
