@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
-import Preloader from '../Scenes/Preloader';
-import Game from '../Scenes/Game';
+import Preloader from './Preloader';
+import Game from './Game';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
