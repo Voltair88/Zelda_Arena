@@ -1,5 +1,5 @@
 import './App.css';
-import './Scenes/PhaserGame.tsx';
+import './Scenes/PhaserGame';
 
 function App() {
   return <div className='App'></div>;
