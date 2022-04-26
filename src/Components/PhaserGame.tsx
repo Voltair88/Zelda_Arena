@@ -1,13 +1,12 @@
 import Phaser from 'phaser';
-import Preloader from './Preloader';
-import Game from './Game';
+import Preloader from '../Scenes/Preloader';
+import Game from '../Scenes/Game';
 
-const gameConfig: Phaser.Types.Core.GameConfig = {
-  title: 'pixelgame',
+const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
   width: 370,
   height: 200,
-  parent: 'phaser-container',
+  parent: 'phaser-game',
   backgroundColor: '#282c34',
   pixelArt: true,
   roundPixels: true,
@@ -15,6 +14,9 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scale: {
     mode: Phaser.Scale.FIT,
     autoCenter: Phaser.Scale.CENTER_BOTH,
+  },
+  dom: {
+    createContainer: false,
   },
   physics: {
     default: 'arcade',
@@ -27,4 +29,4 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
   scene: [Preloader, Game],
 };
 
-export const game = new Phaser.Game(gameConfig);
+export default new Phaser.Game(config);
