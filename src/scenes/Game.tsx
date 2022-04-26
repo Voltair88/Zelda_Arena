@@ -48,17 +48,19 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Floor_decoration', tileset);
     const obstaclesLayer = map.createLayer('obstacles', tileset);
     // create the player
-    this.character = this.physics.add.sprite(60, 80, 'character');
-    this.character.body.setSize(16, 16);
-    this.character.body.offset.y = 16;
+    this.character = this.physics.add
+      .sprite(60, 80, 'character')
+      .setMass(1)
+      .setSize(16, 16)
+      .setOffset(4, 16)
+      .setPushable(false);
 
-    // load in the enemy
-    const enemy = this.add.sprite(
-      150,
-      150,
-      'green_soldier',
-      'green_soldier_down_1'
-    );
+    // create the enemy and load it in
+    const enemy = this.physics.add
+      .sprite(150, 150, 'green_soldier', 'green_soldier_down_1')
+      .setMass(10)
+      .setSize(16, 24)
+      .setPushable(false);
 
     // Load player animations
     playerAnims(this.anims);
@@ -66,7 +68,7 @@ export default class Game extends Phaser.Scene {
 
     // Load enemy animations
     greenSoldierAnims(this.anims);
-    enemy.anims.play('green-idle-down');
+    enemy.anims.play('green-down');
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
@@ -76,10 +78,15 @@ export default class Game extends Phaser.Scene {
 
     // debugDraw(wallsLayer, this);
 
+    // Collision
+
     this.physics.add.collider(this.character, wallsLayer);
     this.physics.add.collider(this.character, obstaclesLayer);
+    this.physics.add.collider(enemy, wallsLayer);
+    this.physics.add.collider(enemy, obstaclesLayer);
+    this.physics.add.collider(this.character, enemy);
 
-    // set the camera
+    // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.character);
     this.cameras.main.roundPixels = true;
