@@ -4,40 +4,39 @@ const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
   // create green soldier animations
 
   anims.create({
-    key: 'idle-down',
+    key: 'green-idle-down',
     frames: [
       {
         key: 'green_soldier',
-        frame: 'green_soldier_down_2.png',
+        frame: 'green_soldier_down_2',
       },
     ],
   });
 
   anims.create({
-    key: 'idle-up',
+    key: 'green-idle-up',
     frames: [
       {
         key: 'green_soldier',
-        frame: 'green_soldier_up_3.png',
+        frame: 'green_soldier_up_3',
       },
     ],
   });
 
   anims.create({
-    key: 'idle-left',
+    key: 'green-idle-left',
     frames: [
       {
         key: 'green_soldier',
-        frame: 'green_soldier_side_3.png',
+        frame: 'green_soldier_side_3',
       },
     ],
   });
 
   anims.create({
-    key: 'walk-down',
+    key: 'green-down',
     frames: anims.generateFrameNames('green_soldier', {
       prefix: 'green_soldier_down_',
-      suffix: '.png',
       start: 1,
       end: 4,
       zeroPad: 0,
@@ -47,10 +46,9 @@ const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
 
   anims.create({
-    key: 'walk-up',
+    key: 'green-up',
     frames: anims.generateFrameNames('green_soldier', {
       prefix: 'green_soldier_up_',
-      suffix: '.png',
       start: 1,
       end: 3,
       zeroPad: 0,
@@ -59,10 +57,9 @@ const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: -1,
   });
   anims.create({
-    key: 'walk-side',
+    key: 'green-side',
     frames: anims.generateFrameNames('green_soldier', {
       prefix: 'green_soldier_side_',
-      suffix: '.png',
       start: 1,
       end: 3,
       zeroPad: 0,
@@ -71,3 +68,5 @@ const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: -1,
   });
 };
+
+export default greenSoldierAnims;

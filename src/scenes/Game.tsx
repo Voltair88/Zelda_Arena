@@ -3,6 +3,7 @@
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
 import playerAnims from '../Animations/Player';
+import greenSoldierAnims from '../Animations/green_soldier';
 import {
   AnimatedTile,
   TileAnimationData,
@@ -24,15 +25,23 @@ export default class Game extends Phaser.Scene {
   }
 
   public preload(): void {
-    this.load.path = 'Assets/character/';
-    this.load.atlas('character', 'character.png', 'character.json');
+    this.load.atlas(
+      'character',
+      'Assets/character/character.png',
+      'Assets/character/character.json'
+    );
+    this.load.atlas(
+      'green_soldier',
+      'Assets/enemies/green_soldier.png',
+      'Assets/enemies/green_soldier.json'
+    );
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
   public create(): void {
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
-    const tileset = map.addTilesetImage('light_world', 'tiles');
+    const tileset = map.addTilesetImage('light_world', 'tiles', 8, 8, 0, 0);
     // load the diffrent layers from tiled
     map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
@@ -53,8 +62,11 @@ export default class Game extends Phaser.Scene {
 
     // Load player animations
     playerAnims(this.anims);
-
     this.character.anims.play('idle-down');
+
+    // Load enemy animations
+    greenSoldierAnims(this.anims);
+    enemy.anims.play('green-idle-down');
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
