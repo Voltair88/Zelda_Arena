@@ -9,7 +9,6 @@ import {
   TileAnimationData,
   TilesetTileData,
 } from '../utils/AnimatedTile';
-import Preloader from './Preloader';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -155,27 +154,3 @@ export default class Game extends Phaser.Scene {
     }
   }
 }
-
-new Phaser.Game({
-  type: Phaser.AUTO,
-  width: 370,
-  height: 200,
-  parent: 'phaser-container',
-  backgroundColor: '#282c34',
-  pixelArt: true,
-  roundPixels: true,
-  antialiasGL: false,
-  scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
-  },
-  physics: {
-    default: 'arcade',
-    arcade: {
-      gravity: { y: 0 },
-
-      debug: true,
-    },
-  },
-  scene: [Preloader, Game],
-});
