@@ -1,5 +1,5 @@
 import './App.css';
-import './Components/PhaserGame';
+import './components/Phasergame';
 
 function App() {
   return <div className='App'></div>;
