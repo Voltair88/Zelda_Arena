@@ -52,6 +52,7 @@ export default class Game extends Phaser.Scene {
       .setPushable(false);
 
     // create the greenSoldier and load it in
+    greenSoldierAnims(this.anims);
     const greenSoldiers = this.physics.add.group({
       classType: GreenSoldier,
     });
