@@ -3,6 +3,8 @@
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
 import playerAnims from '../Animations/Player';
+import Link from '../Player/Link';
+import '../Player/Link';
 import link_bow_anims from '../Animations/link_bow_anims';
 import greenSoldierAnims from '../Animations/green_soldier';
 import {
@@ -14,7 +16,7 @@ import GreenSoldier from '../enemies/greenSoldier';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private Link!: Phaser.Physics.Arcade.Sprite;
+  private Link!: Link;
   private animatedTiles!: AnimatedTile[];
 
   constructor() {
@@ -44,24 +46,16 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Floor_decoration', tileset);
     const obstaclesLayer = map.createLayer('obstacles', tileset);
     // create the player
-    this.Link = this.physics.add
-      .sprite(60, 80, 'Link')
-      .setMass(1)
-      .setSize(16, 16)
-      .setOffset(4, 16)
-      .setPushable(false);
+    this.Link = this.add.Link(120, 100, 'Link');
 
-    // create the greenSoldier and load it in
+    // load in greenSoldier
     greenSoldierAnims(this.anims);
     const greenSoldiers = this.physics.add.group({
       classType: GreenSoldier,
     });
-    /*     const greenSoldier = this.physics.add
-      .sprite(150, 150, 'green_soldier', 'green_soldier_down_1')
-      .setMass(10)
-      .setSize(16, 24)
-      .setPushable(false); */
-    greenSoldiers.get(150, 150, 'green_soldier');
+
+    greenSoldiers.get(150, 150, 'green_soldier').setPushable(false).setMass(10);
+    greenSoldiers.get(150, 250, 'green_soldier').setPushable(false).setMass(10);
 
     // Load player animations
     playerAnims(this.anims);
@@ -76,21 +70,24 @@ export default class Game extends Phaser.Scene {
 
     // debugDraw(wallsLayer, this);
 
+    // Camera
+    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+    this.cameras.main.startFollow(this.Link);
+    this.cameras.main.roundPixels = true;
+
     // Collision
 
     this.physics.add.collider(this.Link, wallsLayer);
     this.physics.add.collider(this.Link, obstaclesLayer);
     this.physics.add.collider(greenSoldiers, wallsLayer);
     this.physics.add.collider(greenSoldiers, obstaclesLayer);
-    this.physics.add.collider(this.Link, greenSoldiers);
-
-    // Camera
-    this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.startFollow(this.Link);
-    this.cameras.main.roundPixels = true;
-
-    // create animated tiles
-    // loop through every tile and check if its id is in the animated tile's array
+    this.physics.add.collider(
+      this.Link,
+      greenSoldiers,
+      this.handlePlayerEnemyCollision,
+      undefined,
+      this
+    );
 
     const tileData = tileset.tileData as TilesetTileData;
     for (const tileid in tileData) {
@@ -111,6 +108,22 @@ export default class Game extends Phaser.Scene {
       });
     }
   }
+  private handlePlayerEnemyCollision(
+    obj1: Phaser.GameObjects.GameObject,
+    obj2: Phaser.GameObjects.GameObject
+  ) {
+    const GreenSoldier = obj2 as GreenSoldier;
+
+    const dx = this.Link.x - GreenSoldier.x;
+    const dy = this.Link.y - GreenSoldier.y;
+
+    const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(100);
+
+    this.Link.setVelocity(dir.x, dir.y);
+  }
+
+  // create animated tiles
+  // loop through every tile and check if its id is in the animated tile's array
 
   public update(time: number, delta: number): void {
     this.animatedTiles.forEach((tile) => tile.update(delta));

@@ -64,7 +64,6 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.setOffset(0, 0);
     }
-
     const speed = 35;
     switch (this.direction) {
       case Direction.UP:
