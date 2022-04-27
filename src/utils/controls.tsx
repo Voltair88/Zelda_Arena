@@ -2,11 +2,9 @@ import Phaser from 'phaser';
 
 const controls = (scene: Phaser.Scene) => {
   const cursors = scene.input.keyboard.createCursorKeys();
-  const jumpButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.SPACE
-  );
+
   const attackButton = scene.input.keyboard.addKey(
-    Phaser.Input.Keyboard.KeyCodes.X
+    Phaser.Input.Keyboard.KeyCodes.SPACE
   );
   const leftButton = scene.input.keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.A
@@ -23,7 +21,6 @@ const controls = (scene: Phaser.Scene) => {
 
   return {
     cursors,
-    jumpButton,
     attackButton,
     leftButton,
     rightButton,

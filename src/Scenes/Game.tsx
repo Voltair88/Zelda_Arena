@@ -3,6 +3,7 @@
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
 import playerAnims from '../Animations/Player';
+import link_bow_anims from '../Animations/link_bow_anims';
 import greenSoldierAnims from '../Animations/green_soldier';
 import {
   AnimatedTile,
@@ -12,7 +13,7 @@ import {
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-  private character!: Phaser.Physics.Arcade.Sprite;
+  private Link!: Phaser.Physics.Arcade.Sprite;
   private animatedTiles!: AnimatedTile[];
 
   constructor() {
@@ -23,13 +24,7 @@ export default class Game extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     this.animatedTiles = [];
   }
-
   public preload(): void {
-    this.load.atlas(
-      'character',
-      'Assets/character/character.png',
-      'Assets/character/character.json'
-    );
     this.load.atlas(
       'green_soldier',
       'Assets/enemies/green_soldier.png',
@@ -48,8 +43,8 @@ export default class Game extends Phaser.Scene {
     map.createLayer('Floor_decoration', tileset);
     const obstaclesLayer = map.createLayer('obstacles', tileset);
     // create the player
-    this.character = this.physics.add
-      .sprite(60, 80, 'character')
+    this.Link = this.physics.add
+      .sprite(60, 80, 'Link')
       .setMass(1)
       .setSize(16, 16)
       .setOffset(4, 16)
@@ -64,7 +59,8 @@ export default class Game extends Phaser.Scene {
 
     // Load player animations
     playerAnims(this.anims);
-    this.character.anims.play('idle-down');
+    link_bow_anims(this.anims);
+    this.Link.anims.play('idle-down');
 
     // Load enemy animations
     greenSoldierAnims(this.anims);
@@ -80,15 +76,15 @@ export default class Game extends Phaser.Scene {
 
     // Collision
 
-    this.physics.add.collider(this.character, wallsLayer);
-    this.physics.add.collider(this.character, obstaclesLayer);
+    this.physics.add.collider(this.Link, wallsLayer);
+    this.physics.add.collider(this.Link, obstaclesLayer);
     this.physics.add.collider(enemy, wallsLayer);
     this.physics.add.collider(enemy, obstaclesLayer);
-    this.physics.add.collider(this.character, enemy);
+    this.physics.add.collider(this.Link, enemy);
 
     // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
-    this.cameras.main.startFollow(this.character);
+    this.cameras.main.startFollow(this.Link);
     this.cameras.main.roundPixels = true;
 
     // create animated tiles
@@ -119,37 +115,55 @@ export default class Game extends Phaser.Scene {
 
     if (this.input.keyboard) {
       if (this.input.keyboard.addKey('W').isDown || this.cursors.up.isDown) {
-        this.character.anims.play('walk-up', true);
-        this.character.setVelocity(0, -100);
+        this.Link.anims.play('walk-up', true);
+        this.Link.setVelocity(0, -100);
       } else if (
         this.input.keyboard.addKey('S').isDown ||
         this.cursors.down.isDown
       ) {
-        this.character.anims.play('walk-down', true);
-        this.character.setVelocity(0, 100);
+        this.Link.anims.play('walk-down', true);
+        this.Link.setVelocity(0, 100);
       } else if (
         this.input.keyboard.addKey('A').isDown ||
         this.cursors.left.isDown
       ) {
-        this.character.anims.play('walk-left', true);
-        this.character.setVelocity(-100, 0);
+        this.Link.anims.play('walk-left', true);
+        this.Link.setVelocity(-100, 0);
       } else if (
         this.input.keyboard.addKey('D').isDown ||
         this.cursors.right.isDown
       ) {
-        this.character.anims.play('walk-right', true);
-        this.character.setVelocity(100, 0);
+        this.Link.anims.play('walk-right', true);
+        this.Link.setVelocity(100, 0);
       } else {
-        // put the character in idle state
-        if (this.character.anims.currentAnim.key === 'walk-down')
-          this.character.anims.play('idle-down', true);
-        else if (this.character.anims.currentAnim.key === 'walk-up')
-          this.character.anims.play('idle-up', true);
-        else if (this.character.anims.currentAnim.key === 'walk-left')
-          this.character.anims.play('idle-left', true);
-        else if (this.character.anims.currentAnim.key === 'walk-right')
-          this.character.anims.play('idle-right', true);
-        this.character.setVelocity(0, 0);
+        // put the Link in idle state
+        if (this.Link.anims.currentAnim.key === 'walk-down')
+          this.Link.anims.play('idle-down', true);
+        else if (this.Link.anims.currentAnim.key === 'walk-up')
+          this.Link.anims.play('idle-up', true);
+        else if (this.Link.anims.currentAnim.key === 'walk-left')
+          this.Link.anims.play('idle-left', true);
+        else if (this.Link.anims.currentAnim.key === 'walk-right')
+          this.Link.anims.play('idle-right', true);
+        this.Link.setVelocity(0, 0);
+      }
+      // load link_bow anims debending on the direction link is facing
+      if (this.Link.anims.currentAnim.key === 'idle-down') {
+        if (this.input.keyboard.addKey('E').isDown) {
+          this.Link.anims.play('bow-down', true);
+        }
+      } else if (this.Link.anims.currentAnim.key === 'idle-up') {
+        if (this.input.keyboard.addKey('E').isDown) {
+          this.Link.anims.play('bow-up', true);
+        }
+      } else if (this.Link.anims.currentAnim.key === 'idle-left') {
+        if (this.input.keyboard.addKey('E').isDown) {
+          this.Link.anims.play('bow-left', true);
+        }
+      } else if (this.Link.anims.currentAnim.key === 'idle-right') {
+        if (this.input.keyboard.addKey('E').isDown) {
+          this.Link.anims.play('bow-right', true);
+        }
       }
     }
   }

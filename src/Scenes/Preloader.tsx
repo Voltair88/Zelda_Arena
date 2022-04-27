@@ -13,13 +13,13 @@ export default class Preloader extends Phaser.Scene {
       'Assets/map/bg-overworld-light.json'
     );
 
-    // Load the players character
+    // Load the players Link
+    this.load.atlas('Link', 'Assets/Link/Link.png', 'Assets/Link/Link.json');
     this.load.atlas(
-      'character',
-      'Assets/character/Zelda.png',
-      'Assets/character/Zelda.json'
+      'link_bow',
+      'Assets/Link/link_bow.png',
+      'Assets/Link/link_bow.json'
     );
-
     // Load enemy
     this.load.atlas(
       'green_soldier',

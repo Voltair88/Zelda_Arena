@@ -7,7 +7,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     key: 'idle-down',
     frames: [
       {
-        key: 'character',
+        key: 'Link',
         frame: 'idle-down.png',
       },
     ],
@@ -17,7 +17,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     key: 'idle-up',
     frames: [
       {
-        key: 'character',
+        key: 'Link',
         frame: 'idle-up.png',
       },
     ],
@@ -27,7 +27,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     key: 'idle-left',
     frames: [
       {
-        key: 'character',
+        key: 'Link',
         frame: 'idle-left.png',
       },
     ],
@@ -36,7 +36,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     key: 'idle-right',
     frames: [
       {
-        key: 'character',
+        key: 'Link',
         frame: 'idle-right.png',
       },
     ],
@@ -44,7 +44,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
 
   anims.create({
     key: 'walk-down',
-    frames: anims.generateFrameNames('character', {
+    frames: anims.generateFrameNames('Link', {
       prefix: 'walking-down-',
       suffix: '.png',
       start: 1,
@@ -57,7 +57,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
 
   anims.create({
     key: 'walk-up',
-    frames: anims.generateFrameNames('character', {
+    frames: anims.generateFrameNames('Link', {
       prefix: 'walking-up-',
       suffix: '.png',
       start: 1,
@@ -70,7 +70,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
 
   anims.create({
     key: 'walk-right',
-    frames: anims.generateFrameNames('character', {
+    frames: anims.generateFrameNames('Link', {
       prefix: 'walking-right-',
       suffix: '.png',
       start: 1,
@@ -82,7 +82,7 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
   });
   anims.create({
     key: 'walk-left',
-    frames: anims.generateFrameNames('character', {
+    frames: anims.generateFrameNames('Link', {
       prefix: 'walking-left-',
       suffix: '.png',
       start: 1,
