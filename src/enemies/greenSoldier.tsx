@@ -20,6 +20,7 @@ const randomDirection = (exclude: Direction) => {
 export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.DOWN;
   private moveEvent: Phaser.Time.TimerEvent;
+
   constructor(
     scene: Phaser.Scene,
     x: number,
@@ -28,8 +29,12 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
     frame: string
   ) {
     super(scene, x, y, texture, frame);
-    // scene.add.existing(this);
     this.anims.play('green-down', true);
+    scene.physics.world.on(
+      Phaser.Physics.Arcade.Events.TILE_COLLIDE,
+      this.handleTileCollision,
+      this
+    );
     this.moveEvent = scene.time.addEvent({
       delay: 2000,
       callback: () => {
@@ -38,19 +43,29 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
       loop: true,
     });
   }
+  destroy(fromScene?: boolean) {
+    this.moveEvent.destroy();
 
-  preload(): void {
-    this.scene.load.atlas(
-      'green_soldier',
-      'Assets/enemies/green_soldier.png',
-      'Assets/enemies/green_soldier.json'
-    );
+    super.destroy(fromScene);
+  }
+  private handleTileCollision(go: Phaser.GameObjects.GameObject) {
+    if (go !== this) {
+      return;
+    }
+
+    this.direction = randomDirection(this.direction);
   }
 
   protected preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
 
-    const speed = 50;
+    if (this.direction === Direction.LEFT) {
+      this.setOffset(10, 0);
+    } else {
+      this.setOffset(0, 0);
+    }
+
+    const speed = 35;
     switch (this.direction) {
       case Direction.UP:
         this.anims.play('green-up', true);
