@@ -10,6 +10,7 @@ import {
   TileAnimationData,
   TilesetTileData,
 } from '../utils/AnimatedTile';
+import GreenSoldier from '../enemies/greenSoldier';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -50,21 +51,21 @@ export default class Game extends Phaser.Scene {
       .setOffset(4, 16)
       .setPushable(false);
 
-    // create the enemy and load it in
-    const enemy = this.physics.add
+    // create the greenSoldier and load it in
+    const greenSoldiers = this.physics.add.group({
+      classType: GreenSoldier,
+    });
+    /*     const greenSoldier = this.physics.add
       .sprite(150, 150, 'green_soldier', 'green_soldier_down_1')
       .setMass(10)
       .setSize(16, 24)
-      .setPushable(false);
+      .setPushable(false); */
+    greenSoldiers.get(150, 150, 'green_soldier');
 
     // Load player animations
     playerAnims(this.anims);
     link_bow_anims(this.anims);
     this.Link.anims.play('idle-down');
-
-    // Load enemy animations
-    greenSoldierAnims(this.anims);
-    enemy.anims.play('green-idle-down');
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
@@ -78,9 +79,9 @@ export default class Game extends Phaser.Scene {
 
     this.physics.add.collider(this.Link, wallsLayer);
     this.physics.add.collider(this.Link, obstaclesLayer);
-    this.physics.add.collider(enemy, wallsLayer);
-    this.physics.add.collider(enemy, obstaclesLayer);
-    this.physics.add.collider(this.Link, enemy);
+    this.physics.add.collider(greenSoldiers, wallsLayer);
+    this.physics.add.collider(greenSoldiers, obstaclesLayer);
+    this.physics.add.collider(this.Link, greenSoldiers);
 
     // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
@@ -147,23 +148,27 @@ export default class Game extends Phaser.Scene {
           this.Link.anims.play('idle-right', true);
         this.Link.setVelocity(0, 0);
       }
-      // load link_bow anims debending on the direction link is facing
-      if (this.Link.anims.currentAnim.key === 'idle-down') {
-        if (this.input.keyboard.addKey('E').isDown) {
-          this.Link.anims.play('bow-down', true);
-        }
-      } else if (this.Link.anims.currentAnim.key === 'idle-up') {
-        if (this.input.keyboard.addKey('E').isDown) {
-          this.Link.anims.play('bow-up', true);
-        }
-      } else if (this.Link.anims.currentAnim.key === 'idle-left') {
-        if (this.input.keyboard.addKey('E').isDown) {
-          this.Link.anims.play('bow-left', true);
-        }
-      } else if (this.Link.anims.currentAnim.key === 'idle-right') {
-        if (this.input.keyboard.addKey('E').isDown) {
-          this.Link.anims.play('bow-right', true);
-        }
+      // when pressing E load the bow anims depending on the direction the player is facing
+      if (
+        this.input.keyboard.addKey('E').isDown &&
+        this.Link.anims.currentAnim.key === 'idle-down'
+      ) {
+        this.Link.anims.play('bow-down', true);
+      } else if (
+        this.input.keyboard.addKey('E').isDown &&
+        this.Link.anims.currentAnim.key === 'idle-up'
+      ) {
+        this.Link.anims.play('bow-up', true);
+      } else if (
+        this.input.keyboard.addKey('E').isDown &&
+        this.Link.anims.currentAnim.key === 'idle-left'
+      ) {
+        this.Link.anims.play('bow-left', true);
+      } else if (
+        this.input.keyboard.addKey('E').isDown &&
+        this.Link.anims.currentAnim.key === 'idle-right'
+      ) {
+        this.Link.anims.play('bow-right', true);
       }
     }
   }
