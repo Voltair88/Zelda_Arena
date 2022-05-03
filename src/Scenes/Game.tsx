@@ -163,26 +163,53 @@ export default class Game extends Phaser.Scene {
         this.Link.setVelocity(0, 0);
       }
       // when pressing E load the bow anims depending on the direction the player is facing
+      if (this.input.keyboard.addKey('E').isDown) {
+        if (
+          this.Link.anims.currentAnim.key === 'walk-down' ||
+          this.Link.anims.currentAnim.key === 'idle-down'
+        ) {
+          this.Link.anims
+            .play('bow-down', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-down', true);
+            });
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-up' ||
+          this.Link.anims.currentAnim.key === 'idle-up'
+        ) {
+          this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
+            this.Link.anims.play('idle-up', true);
+          });
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-left' ||
+          this.Link.anims.currentAnim.key === 'idle-left'
+        ) {
+          this.Link.anims
+            .play('bow-left', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-left', true);
+            });
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-right' ||
+          this.Link.anims.currentAnim.key === 'idle-right'
+        ) {
+          this.Link.anims
+            .play('bow-right', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-right', true);
+            });
+        }
+      }
       if (
-        this.input.keyboard.addKey('E').isDown &&
-        this.Link.anims.currentAnim.key === 'idle-down'
+        this.Link.anims.currentAnim.key === 'bow-down' ||
+        this.Link.anims.currentAnim.key === 'bow-up' ||
+        this.Link.anims.currentAnim.key === 'bow-left' ||
+        this.Link.anims.currentAnim.key === 'bow-right'
       ) {
-        this.Link.anims.play('bow-down', true);
-      } else if (
-        this.input.keyboard.addKey('E').isDown &&
-        this.Link.anims.currentAnim.key === 'idle-up'
-      ) {
-        this.Link.anims.play('bow-up', true);
-      } else if (
-        this.input.keyboard.addKey('E').isDown &&
-        this.Link.anims.currentAnim.key === 'idle-left'
-      ) {
-        this.Link.anims.play('bow-left', true);
-      } else if (
-        this.input.keyboard.addKey('E').isDown &&
-        this.Link.anims.currentAnim.key === 'idle-right'
-      ) {
-        this.Link.anims.play('bow-right', true);
+        this.Link.setVelocity(0, 0);
+        this.Link.setOffset(8, 12);
+      } else {
+        this.Link.setOffset(4, 16);
       }
     }
   }

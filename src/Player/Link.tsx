@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Phaser from 'phaser';
-import Player from '../Animations/Player';
 
 declare global {
   namespace Phaser.GameObjects {
@@ -55,7 +54,7 @@ Phaser.GameObjects.GameObjectFactory.register(
       Phaser.Physics.Arcade.DYNAMIC_BODY
     );
 
-    sprite.body.setSize(16, 16).setMass(1).setSize(16, 16).setOffset(4, 16);
+    sprite.body.setSize(16, 16).setMass(1).setOffset(4, 16);
 
     return sprite;
   }

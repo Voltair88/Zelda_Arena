@@ -58,6 +58,7 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
 
   protected preUpdate(time: number, delta: number): void {
     super.preUpdate(time, delta);
+    this.body.setSize(24, 32);
 
     if (this.direction === Direction.LEFT) {
       this.setOffset(10, 0);

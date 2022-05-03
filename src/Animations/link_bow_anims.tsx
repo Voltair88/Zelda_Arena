@@ -12,7 +12,7 @@ const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
       end: 3,
       zeroPad: 0,
     }),
-    frameRate: 3,
+    frameRate: 10,
     repeat: 0,
   });
 
@@ -25,7 +25,7 @@ const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
       end: 3,
       zeroPad: 0,
     }),
-    frameRate: 3,
+    frameRate: 10,
     repeat: 0,
   });
 
@@ -38,7 +38,7 @@ const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
       end: 3,
       zeroPad: 0,
     }),
-    frameRate: 3,
+    frameRate: 10,
     repeat: 0,
   });
 
@@ -51,7 +51,7 @@ const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
       end: 3,
       zeroPad: 0,
     }),
-    frameRate: 3,
+    frameRate: 10,
     repeat: 0,
   });
 };
