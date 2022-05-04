@@ -41,6 +41,8 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   }
   handleDamage(dir: Phaser.Math.Vector2) {
     if (this._health <= 0) {
+      this.healthState = HealthState.DEAD;
+
       return;
     }
 
@@ -87,7 +89,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
     const down = cursors.down?.isDown;
     const left = cursors.left?.isDown;
     const right = cursors.right?.isDown;
-    const bow = cursors.space.isDown;
+    const bow = cursors.space?.isDown;
     const speed = 100;
 
     if (up) {
@@ -115,7 +117,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
       }
       this.setVelocity(0, 0);
     }
-    if (bow) {
+    /*     if (bow) {
       if (
         this.anims.currentAnim.key === 'walk-down' ||
         this.anims.currentAnim.key === 'idle-down'
@@ -156,7 +158,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.setOffset(4, 16);
     }
-
+ */
     if (
       this.healthState === HealthState.DAMAGE ||
       this.healthState === HealthState.DEAD

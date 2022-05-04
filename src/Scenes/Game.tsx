@@ -27,6 +27,8 @@ export default class Game extends Phaser.Scene {
   }
 
   public init(): void {
+    this.cursors = this.input.keyboard.createCursorKeys();
+
     this.animatedTiles = [];
   }
   public preload(): void {
@@ -136,16 +138,26 @@ export default class Game extends Phaser.Scene {
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
     this.Link.setVelocity(dir.x, dir.y);
-
+    this.Link.handleDamage(dir);
     this.hit += 1;
   }
 
   // create animated tiles
   // loop through every tile and check if its id is in the animated tile's array
 
-  update(time: number, delta: number): void {
-    this.animatedTiles.forEach((tile) => tile.update(delta));
+  public update(time: number, delta: number): void {
+    const up = this.input.keyboard.addKey('W').isDown || this.cursors.up.isDown;
+    const down =
+      this.input.keyboard.addKey('S').isDown || this.cursors.down.isDown;
+    const left =
+      this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
+    const right =
+      this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
+    const bow = this.input.keyboard.addKey('E').isDown;
+    let moving = false;
+    let shoting = false;
 
+    this.animatedTiles.forEach((tile) => tile.update(delta));
     if (this.hit > 0) {
       ++this.hit;
       if (this.hit > 10) {
@@ -153,9 +165,94 @@ export default class Game extends Phaser.Scene {
       }
       return;
     }
-
-    if (this.Link) {
-      this.Link.update(this.cursors);
+    if (this.input.keyboard) {
+      if (up) {
+        this.Link.anims.play('walk-up', true);
+        this.Link.setVelocity(0, -100);
+        moving = true;
+      } else if (down) {
+        this.Link.anims.play('walk-down', true);
+        this.Link.setVelocity(0, 100);
+        moving = true;
+      } else if (left) {
+        this.Link.anims.play('walk-left', true);
+        this.Link.setVelocity(-100, 0);
+        moving = true;
+      } else if (right) {
+        this.Link.anims.play('walk-right', true);
+        this.Link.setVelocity(100, 0);
+        moving = true;
+      } else {
+        // put the Link in idle animation
+        if (this.Link.anims.currentAnim.key === 'walk-down') {
+          this.Link.anims.play('idle-down', true);
+          moving = false;
+        } else if (this.Link.anims.currentAnim.key === 'walk-up') {
+          this.Link.anims.play('idle-up', true);
+          moving = false;
+        } else if (this.Link.anims.currentAnim.key === 'walk-left') {
+          this.Link.anims.play('idle-left', true);
+          moving = false;
+        } else if (this.Link.anims.currentAnim.key === 'walk-right') {
+          this.Link.anims.play('idle-right', true);
+          moving = false;
+        }
+        this.Link.setVelocity(0, 0);
+      }
+      // when pressing E load the bow anims depending on the direction the player is facing
+      if (bow && !moving && !shoting) {
+        this.Link.anims.stopAfterRepeat();
+        if (
+          this.Link.anims.currentAnim.key === 'walk-down' ||
+          this.Link.anims.currentAnim.key === 'idle-down'
+        ) {
+          shoting = true;
+          this.Link.anims
+            .play('bow-down', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-down', true);
+            });
+          shoting = false;
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-up' ||
+          this.Link.anims.currentAnim.key === 'idle-up'
+        ) {
+          this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
+            this.Link.anims.play('idle-up', true);
+          });
+          shoting = false;
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-left' ||
+          this.Link.anims.currentAnim.key === 'idle-left'
+        ) {
+          this.Link.anims
+            .play('bow-left', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-left', true);
+            });
+          shoting = false;
+        } else if (
+          this.Link.anims.currentAnim.key === 'walk-right' ||
+          this.Link.anims.currentAnim.key === 'idle-right'
+        ) {
+          this.Link.anims
+            .play('bow-right', true)
+            .once('animationcomplete', () => {
+              this.Link.anims.play('idle-right', true);
+            });
+        }
+      }
+      if (
+        this.Link.anims.currentAnim.key === 'bow-down' ||
+        this.Link.anims.currentAnim.key === 'bow-up' ||
+        this.Link.anims.currentAnim.key === 'bow-left' ||
+        this.Link.anims.currentAnim.key === 'bow-right'
+      ) {
+        this.Link.setVelocity(0, 0);
+        this.Link.setOffset(8, 12);
+      } else {
+        this.Link.setOffset(4, 16);
+      }
     }
   }
 }
