@@ -25,7 +25,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   private healthState: HealthState = HealthState.HEALTHY;
   private damageTime = 0;
 
-  private _health = 3;
+  private _health = 30;
 
   get health() {
     return this._health;

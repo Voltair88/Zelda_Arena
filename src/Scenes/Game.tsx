@@ -153,14 +153,15 @@ export default class Game extends Phaser.Scene {
       this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
     const right =
       this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
-    const bow = this.input.keyboard.addKey('E').isDown;
+    const bow =
+      this.input.keyboard.addKey('E').isDown || this.cursors.space.isDown;
     let moving = false;
     let shoting = false;
 
     this.animatedTiles.forEach((tile) => tile.update(delta));
     if (this.hit > 0) {
       ++this.hit;
-      if (this.hit > 10) {
+      if (this.hit > 20) {
         this.hit = 0;
       }
       return;
