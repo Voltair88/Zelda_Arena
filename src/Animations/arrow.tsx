@@ -107,3 +107,5 @@ const arrow_anims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: 0,
   });
 };
+
+export default arrow_anims;

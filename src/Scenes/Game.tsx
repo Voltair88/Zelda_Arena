@@ -13,6 +13,7 @@ import {
   TilesetTileData,
 } from '../utils/AnimatedTile';
 import GreenSoldier from '../enemies/greenSoldier';
+import arrow_anims from '../Animations/arrow';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -44,11 +45,13 @@ export default class Game extends Phaser.Scene {
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
     const tileset = map.addTilesetImage('light_world', 'tiles', 8, 8, 0, 0);
+
     // load the diffrent layers from tiled
     map.createLayer('Floor', tileset);
     const wallsLayer = map.createLayer('Walls', tileset);
     map.createLayer('Floor_decoration', tileset);
     const obstaclesLayer = map.createLayer('obstacles', tileset);
+
     // create the player
     this.Link = this.add.Link(120, 100, 'Link');
 
@@ -67,7 +70,7 @@ export default class Game extends Phaser.Scene {
     this.greenSoldiers.get(150, 150, 'green_soldier').setMass(10);
     this.greenSoldiers.get(150, 250, 'green_soldier').setMass(10);
 
-    /*       const greenSoldierLayer = map.getObjectLayer('greenSoldier');
+    /* const greenSoldierLayer = map.getObjectLayer('greenSoldier');
       greenSoldierLayer.objects.forEach((obj) => {
         this.greenSoldiers.get(obj.x, obj.y, 'green_soldier');
       }); */
@@ -75,6 +78,7 @@ export default class Game extends Phaser.Scene {
     // Load player animations
     playerAnims(this.anims);
     link_bow_anims(this.anims);
+    arrow_anims(this.anims);
     this.Link.anims.play('idle-down');
 
     // create collision
