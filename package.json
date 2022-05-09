@@ -75,14 +75,5 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Voltair88/pixel_game/issues"
-  },
-  "jest": {
-    "moduleDirectories": [
-      "src"
-    ],
-    "moduleNameMapper": {
-      "^Animations(.*)$": "<rootDir>/src/Animations/$1",
-      "^Event(.*)$": "<rootDir>/src/events/$1"
-    }
   }
 }
