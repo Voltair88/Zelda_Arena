@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-namespace */
 import Phaser from 'phaser';
 
 declare global {

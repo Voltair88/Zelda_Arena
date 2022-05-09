@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import { arrow, player, link_bow, green_soldier, link_dying } from 'Animations';
 import { sceneEvents } from 'Event';
 import Link from '../Player/Link';
+import '../Player/Link';
 import {
   AnimatedTile,
   TileAnimationData,
