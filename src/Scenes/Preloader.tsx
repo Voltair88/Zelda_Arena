@@ -21,12 +21,20 @@ export default class Preloader extends Phaser.Scene {
       'Assets/Link/link_bow.json'
     );
     this.load.atlas('arrow', 'Assets/Link/arrow.png', 'Assets/Link/arrow.json');
-    // Loadt the enemy
+    this.load.atlas(
+      'link_dying',
+      'Assets/Link/link_dying.png',
+      'Assets/Link/link_dying.json'
+    );
+    // Load the enemy
     this.load.atlas(
       'green_soldier',
       'Assets/enemies/green_soldier.png',
       'Assets/enemies/green_soldier.json'
     );
+    this.load.image('ui-heart-empty', 'Assets/ui/ui_heart_empty.png');
+    this.load.image('ui-heart-full', 'Assets/ui/ui_heart_full.png');
+    this.load.image('ui-heart-half', 'Assets/ui/ui_heart_half.png');
   }
 
   create() {

@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Phaser from 'phaser';
-
 declare global {
   namespace Phaser.GameObjects {
     interface GameObjectFactory {
@@ -25,7 +24,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   private healthState: HealthState = HealthState.HEALTHY;
   private damageTime = 0;
 
-  private _health = 30;
+  private _health = 3;
 
   get health() {
     return this._health;
@@ -42,7 +41,6 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   handleDamage(dir: Phaser.Math.Vector2) {
     if (this._health <= 0) {
       this.healthState = HealthState.DEAD;
-
       return;
     }
 
@@ -52,16 +50,18 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
 
     --this._health;
 
-    if (this._health <= 0) {
+    if (this._health < 1) {
       // TODO: die
       this.healthState = HealthState.DEAD;
+      this.setImmovable(true);
+      this.setVelocity(0, 0);
+      this.setPushable(false);
+
       // add animation
       this.setVelocity(0, 0);
     } else {
       this.setVelocity(dir.x, dir.y);
-
       this.setTint(0xff0000);
-
       this.healthState = HealthState.DAMAGE;
       this.damageTime = 0;
     }

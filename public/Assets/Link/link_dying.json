@@ -1,0 +1,81 @@
+{
+  "frames": {
+    "link-dying-2": {
+      "frame": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-3": {
+      "frame": { "x": 0, "y": 25, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-4": {
+      "frame": { "x": 25, "y": 0, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-5": {
+      "frame": { "x": 25, "y": 25, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-6": {
+      "frame": { "x": 0, "y": 50, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-7": {
+      "frame": { "x": 25, "y": 50, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-8": {
+      "frame": { "x": 50, "y": 0, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-9": {
+      "frame": { "x": 50, "y": 25, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-10": {
+      "frame": { "x": 50, "y": 50, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    },
+    "link-dying-1": {
+      "frame": { "x": 0, "y": 75, "w": 24, "h": 24 },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": { "x": 0, "y": 0, "w": 24, "h": 24 },
+      "sourceSize": { "w": 24, "h": 24 }
+    }
+  },
+  "meta": {
+    "app": "https://www.leshylabs.com/apps/sstool/",
+    "version": "Leshy SpriteSheet Tool v0.8.4",
+    "image": "link_dying.png",
+    "size": { "w": 74, "h": 99 },
+    "scale": 1
+  }
+}

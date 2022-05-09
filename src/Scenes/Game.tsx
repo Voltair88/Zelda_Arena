@@ -14,6 +14,8 @@ import {
 } from '../utils/AnimatedTile';
 import GreenSoldier from '../enemies/greenSoldier';
 import arrow_anims from '../Animations/arrow';
+import { sceneEvents } from '../events/EventCenter';
+import { link_dying_anims } from '../Animations/link_dying';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -42,6 +44,7 @@ export default class Game extends Phaser.Scene {
   }
 
   public create(): void {
+    this.scene.run('GameUI');
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
     const tileset = map.addTilesetImage('light_world', 'tiles', 8, 8, 0, 0);
@@ -79,6 +82,7 @@ export default class Game extends Phaser.Scene {
     playerAnims(this.anims);
     link_bow_anims(this.anims);
     arrow_anims(this.anims);
+    link_dying_anims(this.anims);
     this.Link.anims.play('idle-down');
 
     // create collision
@@ -144,6 +148,15 @@ export default class Game extends Phaser.Scene {
     this.Link.setVelocity(dir.x, dir.y);
     this.Link.handleDamage(dir);
     this.hit += 1;
+
+    sceneEvents.emit('player-health-changed', this.Link.health);
+
+    if (this.Link.health < 1) {
+      this.PlayerEnemysCollision?.destroy();
+      this.Link.anims.play('link-dying');
+      this.Link.setVelocity(0, 0);
+      this.input.keyboard.enabled = false;
+    }
   }
 
   // create animated tiles
@@ -163,14 +176,15 @@ export default class Game extends Phaser.Scene {
     let shoting = false;
 
     this.animatedTiles.forEach((tile) => tile.update(delta));
+
     if (this.hit > 0) {
       ++this.hit;
-      if (this.hit > 20) {
+      if (this.hit > 30) {
         this.hit = 0;
       }
       return;
     }
-    if (this.input.keyboard) {
+    if (this.input.keyboard && this.Link.health >= 1) {
       if (up) {
         this.Link.anims.play('walk-up', true);
         this.Link.setVelocity(0, -100);
