@@ -13,7 +13,11 @@
       "eslint:recommended",
       "plugin:react/recommended",
       "plugin:@typescript-eslint/recommended",
-      "plugin:react-hooks/recommended"
+      "plugin:react-hooks/recommended",
+      "plugin:import/errors",
+      "plugin:import/warnings",
+      "plugin:import/typescript",
+      "plugin:import/recommended"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -23,7 +27,7 @@
       "ecmaVersion": 12,
       "sourceType": "module"
     },
-    "plugins": ["react", "@typescript-eslint"],
+    "plugins": [  "react", "react-hooks", "@typescript-eslint", "import" ],
     "rules": {
       "no-bitwise": 0,
       "react/react-in-jsx-scope": "off",
@@ -31,6 +35,20 @@
       "react-hooks/exhaustive-deps": "warn",
       "@typescript-eslint/ban-ts-comment": "off",
       "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off"
+      "@typescript-eslint/no-explicit-any": "off",
+      "import/no-unresolved": "off",
+      "import/no-extraneous-dependencies": "off",
+      "import/order": ["error", {
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ]
+      }],
+      "import/first": [2],
+      "import/export": [2],
+      "import/newline-after-import": [2]
     }
   }

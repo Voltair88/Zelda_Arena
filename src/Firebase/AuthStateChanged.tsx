@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth, database } from './firebase';
 import { ref, set, onDisconnect } from 'firebase/database';
 import characterName from '../components/characterName';
+import { auth, database } from './firebase';
 
 export default function AuthStateChanged() {
   onAuthStateChanged(auth, (user) => {

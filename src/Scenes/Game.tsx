@@ -1,17 +1,15 @@
-/* eslint-disable no-prototype-builtins */
-/* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
+import { arrow, player, link_bow, green_soldier, link_dying } from 'Animations';
+import { sceneEvents } from 'Event';
 import Link from '../Player/Link';
-import '../Player/Link';
 import {
   AnimatedTile,
   TileAnimationData,
   TilesetTileData,
 } from '../utils/AnimatedTile';
 import GreenSoldier from '../enemies/greenSoldier';
-import { arrow, player, link_bow, green_soldier, link_dying } from 'Animations';
-import { sceneEvents } from 'Events';
+
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;

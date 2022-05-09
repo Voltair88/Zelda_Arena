@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 import Phaser from 'phaser';
+
 declare global {
   namespace Phaser.GameObjects {
     interface GameObjectFactory {

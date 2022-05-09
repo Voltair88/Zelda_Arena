@@ -1,7 +1,7 @@
 import React from 'react';
-import { auth, database } from '../Firebase/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, set } from 'firebase/database';
+import { auth, database } from '../Firebase/firebase';
 
 // function to change the name of the player
 

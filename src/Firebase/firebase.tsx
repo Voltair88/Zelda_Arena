@@ -1,8 +1,8 @@
-import firebaseConfig from './firebase.config';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { getDatabase, ref } from 'firebase/database';
 import { createContext } from 'react';
+import firebaseConfig from './firebase.config';
 
 // create a context provider for the current user
 export const UserContext = createContext(null);
