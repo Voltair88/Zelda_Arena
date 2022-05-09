@@ -155,7 +155,6 @@ export default class Game extends Phaser.Scene {
       this.PlayerEnemysCollision?.destroy();
       this.Link.anims.play('link-dying');
       this.Link.setVelocity(0, 0);
-      this.input.keyboard.enabled = false;
     }
   }
 
