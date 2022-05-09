@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import greenSoldierAnims from '../Animations/green_soldier';
+import { green_soldier } from '../Animations/';
 
 enum Direction {
   UP,
@@ -90,6 +90,6 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
     }
   }
   public create(): void {
-    greenSoldierAnims(this.scene.anims);
+    green_soldier(this.scene.anims);
   }
 }

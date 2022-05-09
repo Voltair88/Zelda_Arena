@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
+export const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
   // create links bow animations
 
   anims.create({
@@ -55,5 +55,3 @@ const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: 0,
   });
 };
-
-export default link_bow_anims;

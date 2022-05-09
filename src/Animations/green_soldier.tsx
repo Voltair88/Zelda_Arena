@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
 
-const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
+export const greenSoldierAnims = (
+  anims: Phaser.Animations.AnimationManager
+) => {
   // create green soldier animations
 
   anims.create({
@@ -68,5 +70,3 @@ const greenSoldierAnims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: -1,
   });
 };
-
-export default greenSoldierAnims;

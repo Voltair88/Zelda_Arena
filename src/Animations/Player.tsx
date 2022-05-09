@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
+export const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
   // create player animations
 
   anims.create({
@@ -93,4 +93,3 @@ const playerAnims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: -1,
   });
 };
-export default playerAnims;

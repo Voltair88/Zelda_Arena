@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-const arrow_anims = (anims: Phaser.Animations.AnimationManager) => {
+export const arrow_anims = (anims: Phaser.Animations.AnimationManager) => {
   // create arrows animations
 
   anims.create({
@@ -107,5 +107,3 @@ const arrow_anims = (anims: Phaser.Animations.AnimationManager) => {
     repeat: 0,
   });
 };
-
-export default arrow_anims;

@@ -2,21 +2,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
-import playerAnims from '../Animations/Player';
 import Link from '../Player/Link';
 import '../Player/Link';
-import link_bow_anims from '../Animations/link_bow_anims';
-import greenSoldierAnims from '../Animations/green_soldier';
 import {
   AnimatedTile,
   TileAnimationData,
   TilesetTileData,
 } from '../utils/AnimatedTile';
 import GreenSoldier from '../enemies/greenSoldier';
-import arrow_anims from '../Animations/arrow';
-import { sceneEvents } from '../events/EventCenter';
-import { link_dying_anims } from '../Animations/link_dying';
-
+import { arrow, player, link_bow, green_soldier, link_dying } from 'Animations';
+import { sceneEvents } from 'Events';
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
@@ -35,11 +30,6 @@ export default class Game extends Phaser.Scene {
     this.animatedTiles = [];
   }
   public preload(): void {
-    this.load.atlas(
-      'green_soldier',
-      'Assets/enemies/green_soldier.png',
-      'Assets/enemies/green_soldier.json'
-    );
     this.cursors = this.input.keyboard.createCursorKeys();
   }
 
@@ -59,7 +49,7 @@ export default class Game extends Phaser.Scene {
     this.Link = this.add.Link(120, 100, 'Link');
 
     // load in greenSoldier
-    greenSoldierAnims(this.anims);
+    green_soldier(this.anims);
     this.greenSoldiers = this.physics.add.group({
       classType: GreenSoldier,
       maxSize: 10,
@@ -79,10 +69,10 @@ export default class Game extends Phaser.Scene {
       }); */
 
     // Load player animations
-    playerAnims(this.anims);
-    link_bow_anims(this.anims);
-    arrow_anims(this.anims);
-    link_dying_anims(this.anims);
+    player(this.anims);
+    link_bow(this.anims);
+    arrow(this.anims);
+    link_dying(this.anims);
     this.Link.anims.play('idle-down');
 
     // create collision

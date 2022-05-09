@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "Animations": ["src/Animations"],
+      "Event": ["src/events"],
+    },
     "target": "es5",
     "lib": [
       "dom",
