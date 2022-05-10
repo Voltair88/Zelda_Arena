@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
-import { arrow, player, linkBow, greenSoldier, linkDying } from 'Animations';
+import { player, linkBow, greenSoldier, linkDying } from 'Animations';
 import { sceneEvents } from 'Event';
 import Link from '../Player/Link';
 import '../Player/Link';
@@ -14,10 +14,12 @@ export default class Game extends Phaser.Scene {
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
   /* private animatedTiles!: AnimatedTile[]; */
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
+  private Arrows!: Phaser.Physics.Arcade.Sprite;
   private hit = 0;
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
   linkWalkingSound?: Phaser.Sound.BaseSound;
+  linkBowSound?: Phaser.Sound.BaseSound;
 
   constructor() {
     super({ key: 'Game' });
@@ -37,6 +39,7 @@ export default class Game extends Phaser.Scene {
     this.linkDeathSound = this.sound.add('link_death');
     this.linkHurtSound = this.sound.add('link_hurt');
     this.linkWalkingSound = this.sound.add('walking');
+    this.linkBowSound = this.sound.add('bow');
     this.scene.run('GameUI');
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
@@ -62,10 +65,13 @@ export default class Game extends Phaser.Scene {
         greenGo.body.onCollide = true;
       },
     });
-
     this.greenSoldiers.get(150, 150, 'green_soldier').setMass(10);
     this.greenSoldiers.get(150, 250, 'green_soldier').setMass(10);
 
+    // create arrows
+    const arrows = this.physics.add.group({
+      classType: Phaser.Physics.Arcade.Image,
+    });
     /* const greenSoldierLayer = map.getObjectLayer('greenSoldier');
       greenSoldierLayer.objects.forEach((obj) => {
         this.greenSoldiers.get(obj.x, obj.y, 'green_soldier');
@@ -74,9 +80,9 @@ export default class Game extends Phaser.Scene {
     // Load player animations
     player(this.anims);
     linkBow(this.anims);
-    arrow(this.anims);
     linkDying(this.anims);
     this.Link.anims.play('idle-down');
+    this.Link.setArrows(arrows);
 
     // create collision
     wallsLayer.setCollisionByProperty({ collision: true });
@@ -97,6 +103,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.collider(this.Link, obstaclesLayer);
     this.physics.add.collider(this.greenSoldiers, wallsLayer);
     this.physics.add.collider(this.greenSoldiers, obstaclesLayer);
+    this.physics.add.collider(arrows, wallsLayer);
+    this.physics.add.collider(arrows, obstaclesLayer);
+
+    this.physics.add.collider(arrows, this.greenSoldiers, this.handleArrowsEnemyCollision, undefined, this);
     this.PlayerEnemysCollision = this.physics.add.collider(
       this.Link,
       this.greenSoldiers,
@@ -120,6 +130,9 @@ export default class Game extends Phaser.Scene {
       });
     } */
   }
+
+  private handleArrowsEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {}
+
   private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
     const enemySprite = obj2 as GreenSoldier;
     const playerSprite = obj1 as Link;
@@ -144,7 +157,6 @@ export default class Game extends Phaser.Scene {
 
     sceneEvents.emit('player-health-changed', this.Link.health);
   }
-
   // create animated tiles
   // loop through every tile and check if its id is in the animated tile's array
 
@@ -153,7 +165,9 @@ export default class Game extends Phaser.Scene {
     const down = this.input.keyboard.addKey('S').isDown || this.cursors.down.isDown;
     const left = this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
     const right = this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
-    const bow = this.input.keyboard.addKey('E').isDown || this.cursors.space.isDown;
+    const bow =
+      Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE')) ||
+      Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('E'));
     let moving = false;
     let shoting = false;
 
@@ -200,31 +214,32 @@ export default class Game extends Phaser.Scene {
         }
         this.Link.setVelocity(0, 0);
       }
-      // when pressing E load the bow anims depending on the direction the player is facing
+      // when pressing E or SPACE load the bow anims depending on the direction the player is facing
       if (bow && !moving && !shoting) {
         this.Link.anims.stopAfterRepeat();
-        if (this.Link.anims.currentAnim.key === 'walk-down' || this.Link.anims.currentAnim.key === 'idle-down') {
+        if (this.Link.anims.currentAnim.key === 'idle-down') {
           shoting = true;
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-down', true);
+            this.Link.shootArrowDown();
           });
           shoting = false;
-        } else if (this.Link.anims.currentAnim.key === 'walk-up' || this.Link.anims.currentAnim.key === 'idle-up') {
+        } else if (this.Link.anims.currentAnim.key === 'idle-up') {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-up', true);
+            this.Link.shootArrowUp();
           });
           shoting = false;
-        } else if (this.Link.anims.currentAnim.key === 'walk-left' || this.Link.anims.currentAnim.key === 'idle-left') {
+        } else if (this.Link.anims.currentAnim.key === 'idle-left') {
           this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-left', true);
+            this.Link.shootArrowLeft();
           });
           shoting = false;
-        } else if (
-          this.Link.anims.currentAnim.key === 'walk-right' ||
-          this.Link.anims.currentAnim.key === 'idle-right'
-        ) {
+        } else if (this.Link.anims.currentAnim.key === 'idle-right') {
           this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-right', true);
+            this.Link.shootArrowRight();
           });
         }
       }

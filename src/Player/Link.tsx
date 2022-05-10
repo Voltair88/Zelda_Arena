@@ -20,10 +20,15 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   private damageTime = 0;
 
   private linkHealth = 3;
-
+  private arrows?: Phaser.Physics.Arcade.Group;
   get health() {
     return this.linkHealth;
   }
+
+  setArrows(arrows: Phaser.Physics.Arcade.Group) {
+    this.arrows = arrows;
+  }
+
   handleDamage(dir: Phaser.Math.Vector2) {
     if (this.linkHealth <= 0) {
       this.healthState = HealthState.DEAD;
@@ -50,6 +55,70 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
       this.setTint(0xff0000);
       this.healthState = HealthState.DAMAGE;
       this.damageTime = 0;
+    }
+  }
+
+  public shootArrowRight() {
+    if (!this.arrows) {
+      return;
+    }
+    const arrowRight = this.arrows.get(this.x, this.y, 'arrow-right', 0) as Phaser.Physics.Arcade.Image;
+
+    if (!arrowRight) {
+      return;
+    }
+
+    if (this.anims.currentAnim.key === 'idle-right') {
+      arrowRight.setVelocity(200, 0);
+      arrowRight.setSize(0, 8);
+    }
+  }
+
+  public shootArrowLeft() {
+    if (!this.arrows) {
+      return;
+    }
+    const arrowLeft = this.arrows.get(this.x, this.y, 'arrow-left', 0) as Phaser.Physics.Arcade.Image;
+
+    if (!arrowLeft) {
+      return;
+    }
+
+    if (this.anims.currentAnim.key === 'idle-left') {
+      arrowLeft.setVelocity(-200, 0);
+      arrowLeft.setSize(0, 8);
+    }
+  }
+
+  public shootArrowUp() {
+    if (!this.arrows) {
+      return;
+    }
+    const arrowUp = this.arrows.get(this.x, this.y, 'arrow-up', 0) as Phaser.Physics.Arcade.Image;
+
+    if (!arrowUp) {
+      return;
+    }
+
+    if (this.anims.currentAnim.key === 'idle-up') {
+      arrowUp.setVelocity(0, -200);
+      arrowUp.setSize(8, 0);
+    }
+  }
+
+  public shootArrowDown() {
+    if (!this.arrows) {
+      return;
+    }
+    const arrowDown = this.arrows.get(this.x, this.y, 'arrow-down', 0) as Phaser.Physics.Arcade.Image;
+
+    if (!arrowDown) {
+      return;
+    }
+
+    if (this.anims.currentAnim.key === 'idle-down') {
+      arrowDown.setVelocity(0, 200);
+      arrowDown.setSize(8, 0);
     }
   }
 
