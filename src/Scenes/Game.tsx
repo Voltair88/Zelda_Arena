@@ -222,24 +222,28 @@ export default class Game extends Phaser.Scene {
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-down', true);
             this.Link.shootArrowDown();
+            this.linkBowSound?.play();
           });
           shoting = false;
         } else if (this.Link.anims.currentAnim.key === 'idle-up') {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-up', true);
             this.Link.shootArrowUp();
+            this.linkBowSound?.play();
           });
           shoting = false;
         } else if (this.Link.anims.currentAnim.key === 'idle-left') {
           this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-left', true);
             this.Link.shootArrowLeft();
+            this.linkBowSound?.play();
           });
           shoting = false;
         } else if (this.Link.anims.currentAnim.key === 'idle-right') {
           this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-right', true);
             this.Link.shootArrowRight();
+            this.linkBowSound?.play();
           });
         }
       }
