@@ -15,6 +15,9 @@ export default class Game extends Phaser.Scene {
   /* private animatedTiles!: AnimatedTile[]; */
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private hit = 0;
+  linkDeathSound?: Phaser.Sound.BaseSound;
+  linkHurtSound?: Phaser.Sound.BaseSound;
+  linkWalkingSound?: Phaser.Sound.BaseSound;
 
   constructor() {
     super({ key: 'Game' });
@@ -31,6 +34,9 @@ export default class Game extends Phaser.Scene {
   }
 
   public create(): void {
+    this.linkDeathSound = this.sound.add('link_death');
+    this.linkHurtSound = this.sound.add('link_hurt');
+    this.linkWalkingSound = this.sound.add('walking');
     this.scene.run('GameUI');
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
@@ -122,18 +128,21 @@ export default class Game extends Phaser.Scene {
     const dy = playerSprite.y - enemySprite.y;
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
-
-    this.Link.setVelocity(dir.x, dir.y);
-    this.Link.handleDamage(dir);
-    this.hit += 1;
-
-    sceneEvents.emit('player-health-changed', this.Link.health);
-
-    if (this.Link.health < 1) {
+    if (this.Link.health > 0) {
+      this.Link.setVelocity(dir.x, dir.y);
+      this.Link.handleDamage(dir);
+      this.hit += 1;
+    }
+    if (this.Link.health >= 1) {
+      this.linkHurtSound?.play();
+    } else if (this.Link.health < 1) {
       this.PlayerEnemysCollision?.destroy();
       this.Link.anims.play('link-dying');
+      this.linkDeathSound?.play();
       this.Link.setVelocity(0, 0);
     }
+
+    sceneEvents.emit('player-health-changed', this.Link.health);
   }
 
   // create animated tiles
