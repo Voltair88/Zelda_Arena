@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export const link_bow_anims = (anims: Phaser.Animations.AnimationManager) => {
+export const linkBowAnims = (anims: Phaser.Animations.AnimationManager) => {
   // create links bow animations
 
   anims.create({

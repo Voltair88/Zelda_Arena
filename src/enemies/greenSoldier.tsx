@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { green_soldier } from '../Animations/';
+import { greenSoldier } from '../Animations';
 
 enum Direction {
   UP,
@@ -21,20 +21,10 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
   private direction = Direction.DOWN;
   private moveEvent: Phaser.Time.TimerEvent;
 
-  constructor(
-    scene: Phaser.Scene,
-    x: number,
-    y: number,
-    texture: string,
-    frame: string
-  ) {
+  constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: string) {
     super(scene, x, y, texture, frame);
     this.anims.play('green-down', true);
-    scene.physics.world.on(
-      Phaser.Physics.Arcade.Events.TILE_COLLIDE,
-      this.handleTileCollision,
-      this
-    );
+    scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this);
     this.moveEvent = scene.time.addEvent({
       delay: 2000,
       callback: () => {
@@ -87,9 +77,11 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
         this.setFlipX(true);
         this.setVelocity(speed, 0);
         break;
+
+      default:
     }
   }
   public create(): void {
-    green_soldier(this.scene.anims);
+    greenSoldier(this.scene.anims);
   }
 }

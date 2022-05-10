@@ -1,21 +1,18 @@
 import Phaser from 'phaser';
 // import debugDraw from '../utils/debug';
-import { arrow, player, link_bow, green_soldier, link_dying } from 'Animations';
+import { arrow, player, linkBow, greenSoldier, linkDying } from 'Animations';
 import { sceneEvents } from 'Event';
 import Link from '../Player/Link';
 import '../Player/Link';
-import {
-  AnimatedTile,
-  TileAnimationData,
-  TilesetTileData,
-} from '../utils/AnimatedTile';
+
+/* import { AnimatedTile, TileAnimationData, TilesetTileData } from '../utils/AnimatedTile'; */
 import GreenSoldier from '../enemies/greenSoldier';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
-  private animatedTiles!: AnimatedTile[];
+  /* private animatedTiles!: AnimatedTile[]; */
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private hit = 0;
 
@@ -26,8 +23,9 @@ export default class Game extends Phaser.Scene {
   public init(): void {
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.animatedTiles = [];
+    /* this.animatedTiles = []; */
   }
+
   public preload(): void {
     this.cursors = this.input.keyboard.createCursorKeys();
   }
@@ -48,7 +46,7 @@ export default class Game extends Phaser.Scene {
     this.Link = this.add.Link(120, 100, 'Link');
 
     // load in greenSoldier
-    green_soldier(this.anims);
+    greenSoldier(this.anims);
     this.greenSoldiers = this.physics.add.group({
       classType: GreenSoldier,
       maxSize: 10,
@@ -69,9 +67,9 @@ export default class Game extends Phaser.Scene {
 
     // Load player animations
     player(this.anims);
-    link_bow(this.anims);
+    linkBow(this.anims);
     arrow(this.anims);
-    link_dying(this.anims);
+    linkDying(this.anims);
     this.Link.anims.play('idle-down');
 
     // create collision
@@ -101,36 +99,27 @@ export default class Game extends Phaser.Scene {
       this
     );
 
-    const tileData = tileset.tileData as TilesetTileData;
+    /* const tileData = tileset.tileData as TilesetTileData;
     for (const tileid in tileData) {
       map.layers.forEach((layer) => {
         layer.data.forEach((tileRow) => {
           tileRow.forEach((tile) => {
             if (tile.index - tileset.firstgid === parseInt(tileid)) {
               this.animatedTiles.push(
-                new AnimatedTile(
-                  tile,
-                  tileData[tileid].animation as TileAnimationData,
-                  tileset.firstgid
-                )
+                new AnimatedTile(tile, tileData[tileid].animation as TileAnimationData, tileset.firstgid)
               );
             }
           });
         });
       });
-    }
+    } */
   }
-  private handlePlayerEnemyCollision(
-    obj1: Phaser.GameObjects.GameObject,
-    obj2: Phaser.GameObjects.GameObject
-  ) {
-    const link = obj1 as Link;
-    const GreenSoldier = obj2 as GreenSoldier;
+  private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+    const enemySprite = obj2 as GreenSoldier;
+    const playerSprite = obj1 as Link;
 
-    console.log('collision');
-
-    const dx = link.x - GreenSoldier.x;
-    const dy = link.y - GreenSoldier.y;
+    const dx = playerSprite.x - enemySprite.x;
+    const dy = playerSprite.y - enemySprite.y;
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
 
@@ -150,23 +139,19 @@ export default class Game extends Phaser.Scene {
   // create animated tiles
   // loop through every tile and check if its id is in the animated tile's array
 
-  public update(time: number, delta: number): void {
+  public update(): void {
     const up = this.input.keyboard.addKey('W').isDown || this.cursors.up.isDown;
-    const down =
-      this.input.keyboard.addKey('S').isDown || this.cursors.down.isDown;
-    const left =
-      this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
-    const right =
-      this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
-    const bow =
-      this.input.keyboard.addKey('E').isDown || this.cursors.space.isDown;
+    const down = this.input.keyboard.addKey('S').isDown || this.cursors.down.isDown;
+    const left = this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
+    const right = this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
+    const bow = this.input.keyboard.addKey('E').isDown || this.cursors.space.isDown;
     let moving = false;
     let shoting = false;
 
-    this.animatedTiles.forEach((tile) => tile.update(delta));
+    /*  this.animatedTiles.forEach((tile) => tile.update(delta)); */
 
     if (this.hit > 0) {
-      ++this.hit;
+      this.hit += 1;
       if (this.hit > 30) {
         this.hit = 0;
       }
@@ -209,44 +194,29 @@ export default class Game extends Phaser.Scene {
       // when pressing E load the bow anims depending on the direction the player is facing
       if (bow && !moving && !shoting) {
         this.Link.anims.stopAfterRepeat();
-        if (
-          this.Link.anims.currentAnim.key === 'walk-down' ||
-          this.Link.anims.currentAnim.key === 'idle-down'
-        ) {
+        if (this.Link.anims.currentAnim.key === 'walk-down' || this.Link.anims.currentAnim.key === 'idle-down') {
           shoting = true;
-          this.Link.anims
-            .play('bow-down', true)
-            .once('animationcomplete', () => {
-              this.Link.anims.play('idle-down', true);
-            });
+          this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
+            this.Link.anims.play('idle-down', true);
+          });
           shoting = false;
-        } else if (
-          this.Link.anims.currentAnim.key === 'walk-up' ||
-          this.Link.anims.currentAnim.key === 'idle-up'
-        ) {
+        } else if (this.Link.anims.currentAnim.key === 'walk-up' || this.Link.anims.currentAnim.key === 'idle-up') {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-up', true);
           });
           shoting = false;
-        } else if (
-          this.Link.anims.currentAnim.key === 'walk-left' ||
-          this.Link.anims.currentAnim.key === 'idle-left'
-        ) {
-          this.Link.anims
-            .play('bow-left', true)
-            .once('animationcomplete', () => {
-              this.Link.anims.play('idle-left', true);
-            });
+        } else if (this.Link.anims.currentAnim.key === 'walk-left' || this.Link.anims.currentAnim.key === 'idle-left') {
+          this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
+            this.Link.anims.play('idle-left', true);
+          });
           shoting = false;
         } else if (
           this.Link.anims.currentAnim.key === 'walk-right' ||
           this.Link.anims.currentAnim.key === 'idle-right'
         ) {
-          this.Link.anims
-            .play('bow-right', true)
-            .once('animationcomplete', () => {
-              this.Link.anims.play('idle-right', true);
-            });
+          this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
+            this.Link.anims.play('idle-right', true);
+          });
         }
       }
       if (

@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export const arrow_anims = (anims: Phaser.Animations.AnimationManager) => {
+export const arrowAnims = (anims: Phaser.Animations.AnimationManager) => {
   // create arrows animations
 
   anims.create({

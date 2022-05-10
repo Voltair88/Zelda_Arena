@@ -17,14 +17,13 @@ export default function Username() {
   // handles the submit of the name
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(name);
 
     // sets the name of the player in the database
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const playerId = user.uid;
-        set(ref(database, 'players/' + playerId), {
-          name: name,
+        set(ref(database, `players/${playerId}`), {
+          name,
         });
       }
     });
@@ -34,17 +33,11 @@ export default function Username() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label title='Name'>
+        <label title="Name" htmlFor="Name">
           Name:
-          <input
-            type='text'
-            name='name'
-            value={name}
-            maxLength={20}
-            onChange={handleName}
-          />
+          <input type="text" name="name" value={name} maxLength={20} onChange={handleName} />
         </label>
-        <input type='submit' value='Submit' />
+        <input type="submit" value="Submit" />
       </form>
     </div>
   );

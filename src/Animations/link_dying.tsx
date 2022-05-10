@@ -1,6 +1,6 @@
 import Phaser from 'phaser';
 
-export const link_dying_anims = (anims: Phaser.Animations.AnimationManager) => {
+export const linkDyingAnims = (anims: Phaser.Animations.AnimationManager) => {
   // create link dying animations
 
   anims.create({

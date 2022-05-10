@@ -1,15 +1,12 @@
+import React from 'react';
 import { onValue } from 'firebase/database';
 import { allPlayersRef } from '../Firebase/firebase';
 
 export default function Highscore() {
   onValue(allPlayersRef, (snapshot) => {
     const allPlayers = snapshot.val();
-    const allPlayersArray = Object.keys(allPlayers).map((key) => {
-      return allPlayers[key];
-    });
-    const allPlayersSorted = allPlayersArray.sort((a, b) => {
-      return b.score - a.score;
-    });
+    const allPlayersArray = Object.keys(allPlayers).map((key) => allPlayers[key]);
+    const allPlayersSorted = allPlayersArray.sort((a, b) => b.score - a.score);
     const highScores = document.getElementById('Highscore') as HTMLElement;
     highScores.innerHTML = '';
     allPlayersSorted.forEach((player) => {
@@ -19,5 +16,5 @@ export default function Highscore() {
     });
   });
 
-  return <div id='Highscore'></div>;
+  return <div id="Highscore" />;
 }

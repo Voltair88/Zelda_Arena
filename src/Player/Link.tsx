@@ -3,12 +3,7 @@ import Phaser from 'phaser';
 declare global {
   namespace Phaser.GameObjects {
     interface GameObjectFactory {
-      Link(
-        x: number,
-        y: number,
-        texture: string,
-        frame?: string | number
-      ): Link;
+      Link(x: number, y: number, texture: string, frame?: string | number): Link;
     }
   }
 }
@@ -24,22 +19,13 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   private healthState: HealthState = HealthState.HEALTHY;
   private damageTime = 0;
 
-  private _health = 3;
+  private linkHealth = 3;
 
   get health() {
-    return this._health;
-  }
-  constructor(
-    scene: Phaser.Scene,
-    x: number,
-    y: number,
-    texture: string,
-    frame?: string
-  ) {
-    super(scene, x, y, texture, frame);
+    return this.linkHealth;
   }
   handleDamage(dir: Phaser.Math.Vector2) {
-    if (this._health <= 0) {
+    if (this.linkHealth <= 0) {
       this.healthState = HealthState.DEAD;
       return;
     }
@@ -48,9 +34,9 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    --this._health;
+    this.linkHealth -= 1;
 
-    if (this._health < 1) {
+    if (this.linkHealth < 1) {
       // TODO: die
       this.healthState = HealthState.DEAD;
       this.setImmovable(true);
@@ -81,14 +67,16 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
           this.damageTime = 0;
         }
         break;
+
+      case HealthState.DEAD:
+        break;
+
+      default:
     }
   }
 
   public update(cursors: Phaser.Types.Input.Keyboard.CursorKeys) {
-    if (
-      this.healthState === HealthState.DAMAGE ||
-      this.healthState === HealthState.DEAD
-    ) {
+    if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) {
       return;
     }
 
@@ -99,7 +87,7 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
 }
 Phaser.GameObjects.GameObjectFactory.register(
   'Link',
-  function (
+  function linkSprite(
     this: Phaser.GameObjects.GameObjectFactory,
     x: number,
     y: number,
@@ -111,10 +99,7 @@ Phaser.GameObjects.GameObjectFactory.register(
     this.displayList.add(sprite);
     this.updateList.add(sprite);
 
-    this.scene.physics.world.enableBody(
-      sprite,
-      Phaser.Physics.Arcade.DYNAMIC_BODY
-    );
+    this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY);
 
     sprite.body.setSize(16, 16).setMass(1).setOffset(4, 16);
 
