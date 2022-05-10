@@ -13,12 +13,10 @@ enum HealthState {
   DAMAGE,
   DEAD,
 }
-
 export default class Link extends Phaser.Physics.Arcade.Sprite {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private healthState: HealthState = HealthState.HEALTHY;
   private damageTime = 0;
-
   private linkHealth = 3;
   private arrows?: Phaser.Physics.Arcade.Group;
   get health() {
@@ -30,6 +28,8 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
   }
 
   handleDamage(dir: Phaser.Math.Vector2) {
+    this.linkHealth -= 1;
+
     if (this.linkHealth <= 0) {
       this.healthState = HealthState.DEAD;
       return;
@@ -39,16 +39,11 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
       return;
     }
 
-    this.linkHealth -= 1;
-
     if (this.linkHealth < 1) {
-      // TODO: die
       this.healthState = HealthState.DEAD;
       this.setImmovable(true);
       this.setVelocity(0, 0);
       this.setPushable(false);
-
-      // add animation
       this.setVelocity(0, 0);
     } else {
       this.setVelocity(dir.x, dir.y);
@@ -58,65 +53,25 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  public shootArrowRight() {
+  public shootArrow() {
     if (!this.arrows) {
-      return;
-    }
-    const arrowRight = this.arrows.get(this.x, this.y, 'arrow-right', 0) as Phaser.Physics.Arcade.Image;
-
-    if (!arrowRight) {
       return;
     }
 
     if (this.anims.currentAnim.key === 'idle-right') {
+      const arrowRight = this.arrows.get(this.x, this.y, 'arrow-right', 0) as Phaser.Physics.Arcade.Image;
       arrowRight.setVelocity(200, 0);
       arrowRight.setSize(0, 8);
-    }
-  }
-
-  public shootArrowLeft() {
-    if (!this.arrows) {
-      return;
-    }
-    const arrowLeft = this.arrows.get(this.x, this.y, 'arrow-left', 0) as Phaser.Physics.Arcade.Image;
-
-    if (!arrowLeft) {
-      return;
-    }
-
-    if (this.anims.currentAnim.key === 'idle-left') {
+    } else if (this.anims.currentAnim.key === 'idle-left') {
+      const arrowLeft = this.arrows.get(this.x, this.y, 'arrow-left', 0) as Phaser.Physics.Arcade.Image;
       arrowLeft.setVelocity(-200, 0);
       arrowLeft.setSize(0, 8);
-    }
-  }
-
-  public shootArrowUp() {
-    if (!this.arrows) {
-      return;
-    }
-    const arrowUp = this.arrows.get(this.x, this.y, 'arrow-up', 0) as Phaser.Physics.Arcade.Image;
-
-    if (!arrowUp) {
-      return;
-    }
-
-    if (this.anims.currentAnim.key === 'idle-up') {
+    } else if (this.anims.currentAnim.key === 'idle-up') {
+      const arrowUp = this.arrows.get(this.x, this.y, 'arrow-up', 0) as Phaser.Physics.Arcade.Image;
       arrowUp.setVelocity(0, -200);
       arrowUp.setSize(8, 0);
-    }
-  }
-
-  public shootArrowDown() {
-    if (!this.arrows) {
-      return;
-    }
-    const arrowDown = this.arrows.get(this.x, this.y, 'arrow-down', 0) as Phaser.Physics.Arcade.Image;
-
-    if (!arrowDown) {
-      return;
-    }
-
-    if (this.anims.currentAnim.key === 'idle-down') {
+    } else if (this.anims.currentAnim.key === 'idle-down') {
+      const arrowDown = this.arrows.get(this.x, this.y, 'arrow-down', 0) as Phaser.Physics.Arcade.Image;
       arrowDown.setVelocity(0, 200);
       arrowDown.setSize(8, 0);
     }
@@ -136,10 +91,8 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
           this.damageTime = 0;
         }
         break;
-
       case HealthState.DEAD:
         break;
-
       default:
     }
   }
@@ -148,7 +101,6 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
     if (this.healthState === HealthState.DAMAGE || this.healthState === HealthState.DEAD) {
       return;
     }
-
     if (!cursors) {
       return;
     }
