@@ -79,8 +79,8 @@ export default class Game extends Phaser.Scene {
 
     // debug draw
 
-    debugDraw(wallsLayer, this);
-    debugDraw(obstaclesLayer, this);
+    // debugDraw(wallsLayer, this);
+    // debugDraw(obstaclesLayer, this);
 
     // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
