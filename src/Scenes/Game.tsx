@@ -286,7 +286,6 @@ export default class Game extends Phaser.Scene {
           set(ref(database, `players/${playerId}`), {
             Score: this.Score,
             Health: this.Link.health,
-            Time: this.game.domContainer.innerHTML,
           });
         }
       });
