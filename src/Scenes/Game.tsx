@@ -148,13 +148,11 @@ export default class Game extends Phaser.Scene {
     sceneEvents.emit('player-health-changed', this.Link.health);
   }
   public update(): void {
-    const up = this.input.keyboard.addKey('W').isDown || this.cursors.up.isDown;
-    const down = this.input.keyboard.addKey('S').isDown || this.cursors.down.isDown;
-    const left = this.input.keyboard.addKey('A').isDown || this.cursors.left.isDown;
-    const right = this.input.keyboard.addKey('D').isDown || this.cursors.right.isDown;
-    const bow =
-      Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('SPACE')) ||
-      Phaser.Input.Keyboard.JustDown(this.input.keyboard.addKey('E'));
+    const up = this.cursors.up.isDown;
+    const down = this.cursors.down.isDown;
+    const left = this.cursors.left.isDown;
+    const right = this.cursors.right.isDown;
+    const bow = this.cursors.space.isDown;
     let moving = false;
     let shoting = false;
 
