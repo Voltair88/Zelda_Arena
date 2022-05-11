@@ -17,6 +17,7 @@ export default class Game extends Phaser.Scene {
   private arrows!: Phaser.Physics.Arcade.Group;
   private hit = 0;
   private Score = 0;
+  private gameOver = false;
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
   linkWalkingSound?: Phaser.Sound.BaseSound;
@@ -108,7 +109,6 @@ export default class Game extends Phaser.Scene {
       this
     );
   }
-
   private handleArrowsEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
     obj1.destroy();
     obj2.destroy();
@@ -152,9 +152,21 @@ export default class Game extends Phaser.Scene {
       this.linkHurtSound?.play();
     } else if (this.Link.health < 1) {
       this.PlayerEnemysCollision?.destroy();
+
+      this.Link.setVelocity(0, 0);
+
+      const gameOverText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Game Over', {
+        fontSize: '32px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        fontStyle: 'bold',
+        align: 'center',
+      });
+      gameOverText.setOrigin(0.5, 0.5);
+      gameOverText.visible = true;
       this.Link.anims.play('link-dying');
       this.linkDeathSound?.play();
-      this.Link.setVelocity(0, 0);
     }
 
     sceneEvents.emit('player-health-changed', this.Link.health);
@@ -275,7 +287,7 @@ export default class Game extends Phaser.Scene {
 
       // when Link is dead, stop the game
       if (this.Link.health < 1) {
-        this.scene.pause();
+        this.gameOver = true;
       }
 
       // Firebase updates the score and health of the player

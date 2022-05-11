@@ -29,6 +29,17 @@ export default class GameUI extends Phaser.Scene {
       backgroundColor: '#ffffff58',
     });
 
+    const gameOverText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Game Over', {
+      fontSize: '32px',
+      color: '#000000',
+      backgroundColor: '#9c9c9c9e',
+      fontFamily: '"Roboto", sans-serif',
+      fontStyle: 'bold',
+      align: 'center',
+    });
+    gameOverText.setOrigin(0.5, 0.5);
+    gameOverText.visible = false;
+
     sceneEvents.on('scoreChanged', (score: number) => {
       this.Score = score;
       scoreLabel.text = `Score: ${this.Score}`;
