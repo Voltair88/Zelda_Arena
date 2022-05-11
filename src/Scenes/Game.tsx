@@ -159,6 +159,20 @@ export default class Game extends Phaser.Scene {
     const left = this.cursors.left.isDown;
     const right = this.cursors.right.isDown;
     const bow = this.cursors.space.isDown;
+    const walkingDown = this.Link.anims.currentAnim.key === 'walk-down';
+    const walkingUp = this.Link.anims.currentAnim.key === 'walk-up';
+    const walkingLeft = this.Link.anims.currentAnim.key === 'walk-left';
+    const walkingRight = this.Link.anims.currentAnim.key === 'walk-right';
+    const idleDown = this.Link.anims.currentAnim.key === 'idle-down';
+    const idleUp = this.Link.anims.currentAnim.key === 'idle-up';
+    const idleLeft = this.Link.anims.currentAnim.key === 'idle-left';
+    const idleRight = this.Link.anims.currentAnim.key === 'idle-right';
+    const isShooting =
+      this.Link.anims.currentAnim.key === 'bow-down' ||
+      this.Link.anims.currentAnim.key === 'bow-up' ||
+      this.Link.anims.currentAnim.key === 'bow-left' ||
+      this.Link.anims.currentAnim.key === 'bow-right';
+
     let moving = false;
     let shoting = false;
 
@@ -189,16 +203,16 @@ export default class Game extends Phaser.Scene {
         moving = true;
       } else {
         // put the Link in idle animation
-        if (this.Link.anims.currentAnim.key === 'walk-down') {
+        if (walkingDown) {
           this.Link.anims.play('idle-down', true);
           moving = false;
-        } else if (this.Link.anims.currentAnim.key === 'walk-up') {
+        } else if (walkingUp) {
           this.Link.anims.play('idle-up', true);
           moving = false;
-        } else if (this.Link.anims.currentAnim.key === 'walk-left') {
+        } else if (walkingLeft) {
           this.Link.anims.play('idle-left', true);
           moving = false;
-        } else if (this.Link.anims.currentAnim.key === 'walk-right') {
+        } else if (walkingRight) {
           this.Link.anims.play('idle-right', true);
           moving = false;
         }
@@ -207,7 +221,7 @@ export default class Game extends Phaser.Scene {
       // when pressing E or SPACE load the bow anims depending on the direction the player is facing
       if (bow && !moving && !shoting) {
         this.Link.anims.stopAfterRepeat();
-        if (this.Link.anims.currentAnim.key === 'idle-down') {
+        if (idleDown) {
           shoting = true;
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-down', true);
@@ -215,21 +229,21 @@ export default class Game extends Phaser.Scene {
             this.linkBowSound?.play();
           });
           shoting = false;
-        } else if (this.Link.anims.currentAnim.key === 'idle-up') {
+        } else if (idleUp) {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-up', true);
             this.Link.shootArrow();
             this.linkBowSound?.play();
           });
           shoting = false;
-        } else if (this.Link.anims.currentAnim.key === 'idle-left') {
+        } else if (idleLeft) {
           this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-left', true);
             this.Link.shootArrow();
             this.linkBowSound?.play();
           });
           shoting = false;
-        } else if (this.Link.anims.currentAnim.key === 'idle-right') {
+        } else if (idleRight) {
           this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-right', true);
             this.Link.shootArrow();
@@ -237,12 +251,7 @@ export default class Game extends Phaser.Scene {
           });
         }
       }
-      if (
-        this.Link.anims.currentAnim.key === 'bow-down' ||
-        this.Link.anims.currentAnim.key === 'bow-up' ||
-        this.Link.anims.currentAnim.key === 'bow-left' ||
-        this.Link.anims.currentAnim.key === 'bow-right'
-      ) {
+      if (isShooting) {
         this.Link.setVelocity(0, 0);
         this.Link.setOffset(8, 12);
       } else {
