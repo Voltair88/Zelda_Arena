@@ -163,8 +163,54 @@ export default class Game extends Phaser.Scene {
         fontStyle: 'bold',
         align: 'center',
       });
-      gameOverText.setOrigin(0.5, 0.5);
+      gameOverText.setOrigin(0.5, 1.5);
       gameOverText.visible = true;
+
+      const submitScore = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Submit Score', {
+        fontSize: '24px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        fontStyle: 'bold',
+        align: 'center',
+      });
+      submitScore.setOrigin(0.5, 0.5);
+      submitScore.visible = true;
+
+      submitScore.setInteractive();
+      submitScore.on('pointerdown', () => {
+        // Firebase updates the score and health of the player
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const playerId = user.uid;
+            set(ref(database, `players/${playerId}`), {
+              Score: this.Score,
+              Health: this.Link.health,
+            });
+          }
+        });
+      });
+
+      const restartButton = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Restart', {
+        fontSize: '24px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        fontStyle: 'bold',
+        align: 'center',
+      });
+      restartButton.setOrigin(0.5, -0.8);
+      restartButton.visible = true;
+
+      restartButton.setInteractive();
+      restartButton.on(
+        'pointerdown',
+        () => {
+          this.scene.restart();
+        },
+        this
+      );
       this.Link.anims.play('link-dying');
       this.linkDeathSound?.play();
     }
@@ -284,23 +330,6 @@ export default class Game extends Phaser.Scene {
         this.scene.resume();
         this.scene.stop('PauseScene'); // stop the pause scene
       }
-
-      // when Link is dead, stop the game
-      if (this.Link.health < 1) {
-        this.gameOver = true;
-      }
-
-      // Firebase updates the score and health of the player
-
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const playerId = user.uid;
-          set(ref(database, `players/${playerId}`), {
-            Score: this.Score,
-            Health: this.Link.health,
-          });
-        }
-      });
     }
   }
 }
