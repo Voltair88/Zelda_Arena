@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
     // create arrows
     this.arrows = this.physics.add.group({
       classType: Phaser.Physics.Arcade.Image,
-      maxSize: 3,
+      maxSize: 100,
     });
 
     // Load player animations
