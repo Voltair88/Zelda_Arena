@@ -18,7 +18,7 @@ const randomDirection = (exclude: Direction) => {
 };
 
 export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
-  private direction = Direction.DOWN;
+  private direction = Phaser.Math.Between(0, 3);
   private moveEvent: Phaser.Time.TimerEvent;
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: string) {
