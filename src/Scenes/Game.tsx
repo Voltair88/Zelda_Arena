@@ -11,6 +11,7 @@ import GreenSoldier from '../enemies/greenSoldier';
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
+  private linkMoveEvent?: Phaser.Events.EventEmitter;
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private arrows!: Phaser.Physics.Arcade.Group;
@@ -55,10 +56,9 @@ export default class Game extends Phaser.Scene {
     greenSoldier(this.anims);
     this.greenSoldiers = this.physics.add.group({
       classType: GreenSoldier,
-      maxSize: 2,
     });
-    this.greenSoldiers.get(150, 150, 'green_soldier').setMass(10);
-    this.greenSoldiers.get(150, 250, 'green_soldier').setMass(10);
+    this.greenSoldiers.get(150, 150, 'green_soldier');
+    this.greenSoldiers.get(150, 250, 'green_soldier');
 
     // create arrows
     this.arrows = this.physics.add.group({
@@ -110,6 +110,12 @@ export default class Game extends Phaser.Scene {
   private handleArrowsEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
     obj1.destroy();
     obj2.destroy();
+
+    const spawnEnemy = this.greenSoldiers.get(
+      Phaser.Math.Between(120, 300),
+      Phaser.Math.Between(80, 320),
+      'green_soldier'
+    );
     console.log('arrow hit enemy');
   }
 
@@ -164,6 +170,7 @@ export default class Game extends Phaser.Scene {
       return;
     }
     if (this.input.keyboard && this.Link.health >= 1) {
+      // loop through linkWalkingSound when moving
       if (up) {
         this.Link.anims.play('walk-up', true);
         this.Link.setVelocity(0, -100);

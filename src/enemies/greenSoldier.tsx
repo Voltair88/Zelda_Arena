@@ -23,7 +23,6 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
 
   constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame: string) {
     super(scene, x, y, texture, frame);
-    this.anims.play('green-down', true);
     scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this);
     this.moveEvent = scene.time.addEvent({
       delay: 2000,
