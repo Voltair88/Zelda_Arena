@@ -88,7 +88,6 @@ export default class Game extends Phaser.Scene {
     // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.Link);
-    this.cameras.main.roundPixels = true;
 
     // Collision
 
@@ -155,7 +154,7 @@ export default class Game extends Phaser.Scene {
 
       this.Link.setVelocity(0, 0);
 
-      const gameOverText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Game Over', {
+      const gameOverText = this.add.text(this.Link.x, this.Link.y, 'Game Over', {
         fontSize: '32px',
         color: '#000000',
         backgroundColor: '#9c9c9c9e',
@@ -166,7 +165,7 @@ export default class Game extends Phaser.Scene {
       gameOverText.setOrigin(0.5, 1.5);
       gameOverText.visible = true;
 
-      const submitScore = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Submit Score', {
+      const submitScore = this.add.text(this.Link.x, this.Link.y, 'Submit Score', {
         fontSize: '24px',
         color: '#000000',
         backgroundColor: '#9c9c9c9e',
@@ -192,7 +191,7 @@ export default class Game extends Phaser.Scene {
         });
       });
 
-      const restartButton = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Restart', {
+      const restartButton = this.add.text(this.Link.x, this.Link.y, 'Restart', {
         fontSize: '24px',
         color: '#000000',
         backgroundColor: '#9c9c9c9e',

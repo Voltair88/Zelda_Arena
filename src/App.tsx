@@ -4,11 +4,7 @@ import './components/Phasergame';
 import Username from 'components/username';
 
 function App() {
-  return (
-    <div className="App">
-      <Username />
-    </div>
-  );
+  return <div className="App" />;
 }
 
 export default App;
