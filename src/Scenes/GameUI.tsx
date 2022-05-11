@@ -3,6 +3,7 @@ import { sceneEvents } from 'Event';
 
 export default class GameUI extends Phaser.Scene {
   private hearts!: Phaser.GameObjects.Group;
+  private Score = 0;
   constructor() {
     super({ key: 'GameUI' });
   }
@@ -22,18 +23,21 @@ export default class GameUI extends Phaser.Scene {
       quantity: 3,
     });
 
-    sceneEvents.on(
-      'player-health-changed',
-      this.handlePlayerHealthChanged,
-      this
-    );
+    const scoreLabel = this.add.text(3, 20, `Score: ${this.Score}`, {
+      fontSize: '12px',
+      color: '#0b0b0b',
+      backgroundColor: '#ffffff58',
+    });
 
+    sceneEvents.on('scoreChanged', (score: number) => {
+      this.Score = score;
+      scoreLabel.text = `Score: ${this.Score}`;
+    });
+
+    sceneEvents.on('player-health-changed', this.handlePlayerHealthChanged, this);
     this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
-      sceneEvents.off(
-        'player-health-changed',
-        this.handlePlayerHealthChanged,
-        this
-      );
+      sceneEvents.off('player-health-changed', this.handlePlayerHealthChanged, this);
+      sceneEvents.off('scoreChanged');
     });
   }
 

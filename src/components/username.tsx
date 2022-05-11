@@ -25,6 +25,9 @@ export default function Username() {
         set(ref(database, `players/${playerId}`), {
           name,
         });
+
+        // sets the name of the player in the local storage
+        localStorage.setItem('name', name);
       }
     });
   };

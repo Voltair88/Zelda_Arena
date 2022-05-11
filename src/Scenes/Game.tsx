@@ -1,21 +1,22 @@
 import Phaser from 'phaser';
 import { player, linkBow, greenSoldier, linkDying, arrow } from 'Animations';
 import { sceneEvents } from 'Event';
+import { ref, set } from 'firebase/database';
+import { onAuthStateChanged } from 'firebase/auth';
 import debugDraw from '../utils/debug';
 import Link from '../Player/Link';
 import '../Player/Link';
-
-/* import { AnimatedTile, TileAnimationData, TilesetTileData } from '../utils/AnimatedTile'; */
+import { auth, database } from '../Firebase/firebase';
 import GreenSoldier from '../enemies/greenSoldier';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
-  private linkMoveEvent?: Phaser.Events.EventEmitter;
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private arrows!: Phaser.Physics.Arcade.Group;
   private hit = 0;
+  private Score = 0;
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
   linkWalkingSound?: Phaser.Sound.BaseSound;
@@ -33,6 +34,7 @@ export default class Game extends Phaser.Scene {
   public create(): void {
     // load Game UI
     this.scene.run('GameUI');
+
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
     const tileset = map.addTilesetImage('light_world', 'tiles', 8, 8, 0, 0);
@@ -110,6 +112,10 @@ export default class Game extends Phaser.Scene {
   private handleArrowsEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
     obj1.destroy();
     obj2.destroy();
+    this.Score += 1;
+    sceneEvents.emit('scoreChanged', this.Score);
+
+    console.log(this.Score);
 
     const spawnEnemy = this.greenSoldiers.get(
       Phaser.Math.Between(120, 300),
@@ -172,7 +178,6 @@ export default class Game extends Phaser.Scene {
       this.Link.anims.currentAnim.key === 'bow-up' ||
       this.Link.anims.currentAnim.key === 'bow-left' ||
       this.Link.anims.currentAnim.key === 'bow-right';
-
     let moving = false;
     let shoting = false;
 
@@ -257,6 +262,34 @@ export default class Game extends Phaser.Scene {
       } else {
         this.Link.setOffset(4, 16);
       }
+
+      // when pressing the ESCAPE key, pause the game
+      if (this.input.keyboard.addKey('ESC').isDown) {
+        this.scene.pause();
+        this.scene.launch('PauseScene'); // launch the pause scene
+
+        // when the pause scene is closed, resume the game
+        this.scene.resume();
+        this.scene.stop('PauseScene'); // stop the pause scene
+      }
+
+      // when Link is dead, stop the game
+      if (this.Link.health < 1) {
+        this.scene.pause();
+      }
+
+      // Firebase updates the score and health of the player
+
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const playerId = user.uid;
+          set(ref(database, `players/${playerId}`), {
+            Score: this.Score,
+            Health: this.Link.health,
+            Time: this.game.domContainer.innerHTML,
+          });
+        }
+      });
     }
   }
 }
