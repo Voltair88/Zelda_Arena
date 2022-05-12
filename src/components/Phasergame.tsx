@@ -1,12 +1,13 @@
 import Phaser from 'phaser';
+import GameOverScene from 'Scenes/gameOverScene';
 import Preloader from '../Scenes/Preloader';
 import Game from '../Scenes/Game';
 import GameUI from '../Scenes/GameUI';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
-  width: 370,
-  height: 200,
+  width: 1920,
+  height: 1080,
   parent: 'phaser-game',
   backgroundColor: '#282c34',
   pixelArt: true,
@@ -26,7 +27,7 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false,
     },
   },
-  scene: [Preloader, Game, GameUI],
+  scene: [Preloader, Game, GameUI, GameOverScene],
 };
 
 export default new Phaser.Game(config);

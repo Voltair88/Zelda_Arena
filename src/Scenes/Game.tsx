@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { player, linkBow, greenSoldier, linkDying, arrow } from 'Animations';
+import { player, linkBow, greenSoldier, linkDying } from 'Animations';
 import { sceneEvents } from 'Event';
 import { ref, set } from 'firebase/database';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -17,7 +17,6 @@ export default class Game extends Phaser.Scene {
   private arrows!: Phaser.Physics.Arcade.Group;
   private hit = 0;
   private Score = 0;
-  private gameOver = false;
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
   linkWalkingSound?: Phaser.Sound.BaseSound;
@@ -53,7 +52,7 @@ export default class Game extends Phaser.Scene {
     this.linkBowSound = this.sound.add('bow');
 
     // create the player
-    this.Link = this.add.Link(120, 100, 'Link');
+    this.Link = this.add.Link(400, 100, 'Link');
 
     // load in greenSoldier
     greenSoldier(this.anims);
@@ -61,7 +60,11 @@ export default class Game extends Phaser.Scene {
       classType: GreenSoldier,
     });
     this.greenSoldiers.get(150, 150, 'green_soldier');
-    this.greenSoldiers.get(150, 250, 'green_soldier');
+    this.greenSoldiers.get(450, 270, 'green_soldier');
+    this.greenSoldiers.get(250, 350, 'green_soldier');
+    this.greenSoldiers.get(350, 350, 'green_soldier');
+    this.greenSoldiers.get(650, 250, 'green_soldier');
+    this.greenSoldiers.get(150, 300, 'green_soldier');
 
     // create arrows
     this.arrows = this.physics.add.group({
@@ -88,6 +91,8 @@ export default class Game extends Phaser.Scene {
     // Camera
     this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
     this.cameras.main.startFollow(this.Link);
+    this.cameras.main.setRoundPixels(true);
+    this.cameras.main.setZoom(3);
 
     // Collision
 
@@ -114,10 +119,8 @@ export default class Game extends Phaser.Scene {
     this.Score += 1;
     sceneEvents.emit('scoreChanged', this.Score);
 
-    console.log(this.Score);
-
     const spawnEnemy = this.greenSoldiers.get(
-      Phaser.Math.Between(120, 300),
+      Phaser.Math.Between(120, 600),
       Phaser.Math.Between(80, 320),
       'green_soldier'
     );
@@ -150,71 +153,20 @@ export default class Game extends Phaser.Scene {
     if (this.Link.health >= 1) {
       this.linkHurtSound?.play();
     } else if (this.Link.health < 1) {
+      sceneEvents.emit('submitScore', this.Score);
+      console.log(this.Score);
+      this.scene.run('GameOver');
       this.PlayerEnemysCollision?.destroy();
-
       this.Link.setVelocity(0, 0);
-
-      const gameOverText = this.add.text(this.Link.x, this.Link.y, 'Game Over', {
-        fontSize: '32px',
-        color: '#000000',
-        backgroundColor: '#9c9c9c9e',
-        fontFamily: '"Roboto", sans-serif',
-        fontStyle: 'bold',
-        align: 'center',
-      });
-      gameOverText.setOrigin(0.5, 1.5);
-      gameOverText.visible = true;
-
-      const submitScore = this.add.text(this.Link.x, this.Link.y, 'Submit Score', {
-        fontSize: '24px',
-        color: '#000000',
-        backgroundColor: '#9c9c9c9e',
-        fontFamily: '"Roboto", sans-serif',
-        fontStyle: 'bold',
-        align: 'center',
-      });
-      submitScore.setOrigin(0.5, 0.5);
-      submitScore.visible = true;
-
-      submitScore.setInteractive();
-      submitScore.on('pointerdown', () => {
-        // Firebase updates the score and health of the player
-
-        onAuthStateChanged(auth, (user) => {
-          if (user) {
-            const playerId = user.uid;
-            set(ref(database, `players/${playerId}`), {
-              Score: this.Score,
-              Health: this.Link.health,
-            });
-          }
-        });
-      });
-
-      const restartButton = this.add.text(this.Link.x, this.Link.y, 'Restart', {
-        fontSize: '24px',
-        color: '#000000',
-        backgroundColor: '#9c9c9c9e',
-        fontFamily: '"Roboto", sans-serif',
-        fontStyle: 'bold',
-        align: 'center',
-      });
-      restartButton.setOrigin(0.5, -0.8);
-      restartButton.visible = true;
-
-      restartButton.setInteractive();
-      restartButton.on(
-        'pointerdown',
-        () => {
-          this.scene.restart();
-        },
-        this
-      );
       this.Link.anims.play('link-dying');
       this.linkDeathSound?.play();
     }
 
     sceneEvents.emit('player-health-changed', this.Link.health);
+
+    sceneEvents.on('resetScore', (score: number) => {
+      this.Score = 0;
+    });
   }
   public update(): void {
     const up = this.cursors.up.isDown;
@@ -246,7 +198,6 @@ export default class Game extends Phaser.Scene {
       return;
     }
     if (this.input.keyboard && this.Link.health >= 1) {
-      // loop through linkWalkingSound when moving
       if (up) {
         this.Link.anims.play('walk-up', true);
         this.Link.setVelocity(0, -100);
@@ -318,16 +269,6 @@ export default class Game extends Phaser.Scene {
         this.Link.setOffset(8, 12);
       } else {
         this.Link.setOffset(4, 16);
-      }
-
-      // when pressing the ESCAPE key, pause the game
-      if (this.input.keyboard.addKey('ESC').isDown) {
-        this.scene.pause();
-        this.scene.launch('PauseScene'); // launch the pause scene
-
-        // when the pause scene is closed, resume the game
-        this.scene.resume();
-        this.scene.stop('PauseScene'); // stop the pause scene
       }
     }
   }

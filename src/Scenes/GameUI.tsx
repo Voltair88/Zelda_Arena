@@ -3,7 +3,7 @@ import { sceneEvents } from 'Event';
 
 export default class GameUI extends Phaser.Scene {
   private hearts!: Phaser.GameObjects.Group;
-  private Score = 0;
+  public Score = 0;
   constructor() {
     super({ key: 'GameUI' });
   }
@@ -13,35 +13,30 @@ export default class GameUI extends Phaser.Scene {
       classType: Phaser.GameObjects.Image,
     });
     this.hearts.createMultiple({
+      setScale: { x: 3, y: 3 },
       key: 'ui-heart-full',
       setXY: {
-        x: 10,
-        y: 10,
-        stepX: 14,
+        x: 30,
+        y: 30,
+        stepX: 50,
         stepY: 0,
       },
       quantity: 3,
     });
 
-    const scoreLabel = this.add.text(3, 20, `Score: ${this.Score}`, {
-      fontSize: '12px',
+    const scoreLabel = this.add.text(3, 60, `Score: ${this.Score}`, {
+      fontSize: '56px',
       color: '#0b0b0b',
       backgroundColor: '#ffffff58',
     });
 
-    const gameOverText = this.add.text(this.cameras.main.width / 2, this.cameras.main.height / 2, 'Game Over', {
-      fontSize: '32px',
-      color: '#000000',
-      backgroundColor: '#9c9c9c9e',
-      fontFamily: '"Roboto", sans-serif',
-      fontStyle: 'bold',
-      align: 'center',
-    });
-    gameOverText.setOrigin(0.5, 0.5);
-    gameOverText.visible = false;
-
     sceneEvents.on('scoreChanged', (score: number) => {
       this.Score = score;
+      scoreLabel.text = `Score: ${this.Score}`;
+    });
+
+    sceneEvents.on('resetScore', (score: number) => {
+      this.Score = 0;
       scoreLabel.text = `Score: ${this.Score}`;
     });
 
