@@ -146,7 +146,6 @@ export default class Game extends Phaser.Scene {
       this.linkHurtSound?.play();
     } else if (this.Link.health < 1) {
       sceneEvents.emit('submitScore', this.Score);
-      console.log(this.Score);
       this.scene.run('GameOver');
       this.PlayerEnemysCollision?.destroy();
       this.Link.setVelocity(0, 0);
@@ -154,6 +153,7 @@ export default class Game extends Phaser.Scene {
       this.linkDeathSound?.play();
     }
     sceneEvents.emit('player-health-changed', this.Link.health);
+    sceneEvents.emit('submitScore', this.Score);
 
     sceneEvents.on('resetScore', (score: number) => {
       this.Score = 0;
