@@ -84,14 +84,12 @@ export default class GameOverScene extends Phaser.Scene {
         this.Score = score;
       });
       // Firebase updates the score of the player
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          const playerId = user.uid;
-          set(ref(database, `players/${playerId}`), {
-            score: this.Score,
-          });
-        }
-      });
+      if (auth.currentUser) {
+        const playerId = auth.currentUser.uid;
+        set(ref(database, `players/${playerId}`), {
+          score: this.Score,
+        });
+      }
       submitScore.text = 'Score submitted!';
       submitScore.setInteractive(false);
     });

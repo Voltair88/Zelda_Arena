@@ -114,6 +114,7 @@ export default class Game extends Phaser.Scene {
     obj2.destroy();
     this.Score += 1;
     sceneEvents.emit('scoreChanged', this.Score);
+    console.log(this.Score);
 
     const spawnEnemy = this.greenSoldiers.get(
       Phaser.Math.Between(120, 600),
@@ -139,7 +140,6 @@ export default class Game extends Phaser.Scene {
 
     const dir = new Phaser.Math.Vector2(dx, dy).normalize().scale(200);
     if (this.Link.health > 0) {
-      console.log(auth.currentUser);
       this.Link.setVelocity(dir.x, dir.y);
       this.Link.handleDamage(dir);
       this.hit += 1;
