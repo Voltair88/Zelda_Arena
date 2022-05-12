@@ -12,31 +12,40 @@ export default class GameOverScene extends Phaser.Scene {
   }
 
   create() {
-    sceneEvents.on('submitScore', (score: number) => {
-      this.Score = score;
-    });
-
-    const gameOverText = this.add.text(600, 200, 'Game Over', {
-      fontSize: '70px',
-      color: '#000000',
-      backgroundColor: '#9c9c9c9e',
-      fontFamily: '"Roboto", sans-serif',
-      align: 'center',
-    });
+    const gamescene = this.scene.get('Game');
+    // Game over text
+    const gameOverText = this.add.text(
+      gamescene.cameras.main.width / 2,
+      gamescene.cameras.main.height / 3.4,
+      'Game Over',
+      {
+        fontSize: '140px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        align: 'center',
+      }
+    );
     gameOverText.setOrigin(0.5, 0.5);
 
-    const submitScore = this.add.text(600, 300, 'Submit Score', {
-      fontSize: '54px',
-      color: '#000000',
-      backgroundColor: '#9c9c9c9e',
-      fontFamily: '"Roboto", sans-serif',
-      fontStyle: 'bold',
-      align: 'center',
-    });
+    // Submit score to firebase
+    const submitScore = this.add.text(
+      gamescene.cameras.main.width / 2,
+      gamescene.cameras.main.height / 2.1,
+      'Submit Score',
+      {
+        fontSize: '54px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        fontStyle: 'bold',
+        align: 'center',
+      }
+    );
     submitScore.setOrigin(0.5, 0.5);
     submitScore.setInteractive();
     submitScore.on('pointerdown', () => {
-      console.log('submit score');
+      console.log(this.Score, 'score');
       sceneEvents.on('submitScore', (score: number) => {
         this.Score = score;
       });
@@ -51,18 +60,25 @@ export default class GameOverScene extends Phaser.Scene {
       });
     });
 
-    const restartButton = this.add.text(600, 400, 'Restart', {
-      fontSize: '54px',
-      color: '#000000',
-      backgroundColor: '#9c9c9c9e',
-      fontFamily: '"Roboto", sans-serif',
-      fontStyle: 'bold',
-      align: 'center',
-    });
+    // Restart the game
+    const restartButton = this.add.text(
+      gamescene.cameras.main.width / 2,
+      gamescene.cameras.main.height / 1.8,
+
+      'Restart',
+
+      {
+        fontSize: '54px',
+        color: '#000000',
+        backgroundColor: '#9c9c9c9e',
+        fontFamily: '"Roboto", sans-serif',
+        fontStyle: 'bold',
+        align: 'center',
+      }
+    );
     restartButton.setOrigin(0.5, 0.5);
     restartButton.setInteractive();
 
-    // Restart the scene Game when the restart button is clicked
     restartButton.on('pointerdown', () => {
       this.scene.start('Preloader');
       sceneEvents.emit('resetScore');

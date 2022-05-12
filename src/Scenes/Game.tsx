@@ -1,12 +1,8 @@
 import Phaser from 'phaser';
 import { player, linkBow, greenSoldier, linkDying } from 'Animations';
 import { sceneEvents } from 'Event';
-import { ref, set } from 'firebase/database';
-import { onAuthStateChanged } from 'firebase/auth';
-import debugDraw from '../utils/debug';
 import Link from '../Player/Link';
 import '../Player/Link';
-import { auth, database } from '../Firebase/firebase';
 import GreenSoldier from '../enemies/greenSoldier';
 
 export default class Game extends Phaser.Scene {
@@ -161,7 +157,6 @@ export default class Game extends Phaser.Scene {
       this.Link.anims.play('link-dying');
       this.linkDeathSound?.play();
     }
-
     sceneEvents.emit('player-health-changed', this.Link.health);
 
     sceneEvents.on('resetScore', (score: number) => {
