@@ -3,6 +3,7 @@ import GameOverScene from 'Scenes/gameOverScene';
 import Preloader from '../Scenes/Preloader';
 import Game from '../Scenes/Game';
 import GameUI from '../Scenes/GameUI';
+import TitleScene from '../Scenes/TitleScene';
 
 const config: Phaser.Types.Core.GameConfig = {
   type: Phaser.AUTO,
@@ -27,7 +28,7 @@ const config: Phaser.Types.Core.GameConfig = {
       debug: false,
     },
   },
-  scene: [Preloader, Game, GameUI, GameOverScene],
+  scene: [TitleScene, Preloader, Game, GameUI, GameOverScene],
 };
 
 export default new Phaser.Game(config);

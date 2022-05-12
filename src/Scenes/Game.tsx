@@ -65,7 +65,6 @@ export default class Game extends Phaser.Scene {
     // create arrows
     this.arrows = this.physics.add.group({
       classType: Phaser.Physics.Arcade.Image,
-      maxSize: 100,
     });
 
     // Load player animations
@@ -120,17 +119,14 @@ export default class Game extends Phaser.Scene {
       Phaser.Math.Between(80, 320),
       'green_soldier'
     );
-    console.log('arrow hit enemy');
   }
 
   public handleArrowWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
     obj1.destroy();
-    console.log('arrow hit wall');
   }
 
   public handleArrowObstacleCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
     obj1.destroy();
-    console.log('arrow hit obstacle');
   }
 
   private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {

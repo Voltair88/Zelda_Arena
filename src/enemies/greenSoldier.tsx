@@ -25,7 +25,7 @@ export default class GreenSoldier extends Phaser.Physics.Arcade.Sprite {
     super(scene, x, y, texture, frame);
     scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this);
     this.moveEvent = scene.time.addEvent({
-      delay: 2000,
+      delay: Phaser.Math.Between(1000, 2000),
       callback: () => {
         this.direction = randomDirection(this.direction);
       },

@@ -1,8 +1,8 @@
 import Phaser from 'phaser';
-import { ref, set } from 'firebase/database';
+import { ref, set, onValue } from 'firebase/database';
 import { onAuthStateChanged } from 'firebase/auth';
 import { sceneEvents } from 'Event';
-import { auth, database } from '../Firebase/firebase';
+import { allPlayersRef, auth, database } from '../Firebase/firebase';
 
 export default class GameOverScene extends Phaser.Scene {
   private Score = 0;
@@ -13,6 +13,42 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     const gamescene = this.scene.get('Game');
+
+    // Highscore
+
+    const HighScoreContainer = this.add.rectangle(
+      gamescene.cameras.main.width / 10,
+      gamescene.cameras.main.height / 2,
+      350,
+      600,
+      0xf3f3f3
+    );
+    // TODO: Needs testing
+    onValue(allPlayersRef, (snapshot) => {
+      const allPlayers = snapshot.val();
+      const allPlayersArray = Object.keys(allPlayers).map((key) => allPlayers[key]);
+      const allPlayersSorted = allPlayersArray.sort((a, b) => b.score - a.score);
+      const highscore = allPlayersSorted[0].score;
+      const highscoreLabel = this.add.text(
+        gamescene.cameras.main.width / 2 - 900,
+        gamescene.cameras.main.height / 4,
+        `Highscore: ${highscore}`,
+        {
+          fontFamily: '"Roboto", sans-serif',
+          fontSize: '56px',
+          stroke: '#0b0b0b',
+          strokeThickness: 2,
+          color: '#000000',
+          backgroundColor: '#66666626',
+        }
+      );
+      highscoreLabel.setScale(0.5);
+      highscoreLabel.setDepth(1);
+    });
+
+    // Game over scene
+    this.add.rectangle(gamescene.cameras.main.width / 2, gamescene.cameras.main.height / 2.3, 800, 600, 0xf3f3f3, 0.5);
+
     // Game over text
     const gameOverText = this.add.text(
       gamescene.cameras.main.width / 2,
@@ -21,7 +57,6 @@ export default class GameOverScene extends Phaser.Scene {
       {
         fontSize: '140px',
         color: '#000000',
-        backgroundColor: '#9c9c9c9e',
         fontFamily: '"Roboto", sans-serif',
         align: 'center',
       }
@@ -45,7 +80,6 @@ export default class GameOverScene extends Phaser.Scene {
     submitScore.setOrigin(0.5, 0.5);
     submitScore.setInteractive();
     submitScore.on('pointerdown', () => {
-      console.log(this.Score, 'score');
       sceneEvents.on('submitScore', (score: number) => {
         this.Score = score;
       });
@@ -58,6 +92,8 @@ export default class GameOverScene extends Phaser.Scene {
           });
         }
       });
+      submitScore.text = 'Score submitted!';
+      submitScore.setInteractive(false);
     });
 
     // Restart the game

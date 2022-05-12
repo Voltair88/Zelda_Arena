@@ -23,7 +23,6 @@ export default class GameUI extends Phaser.Scene {
       },
       quantity: 3,
     });
-
     const scoreLabel = this.add.text(3, 60, `Score: ${this.Score}`, {
       fontSize: '56px',
       color: '#0b0b0b',
