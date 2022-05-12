@@ -1,13 +1,13 @@
 // firebase config
 const firebaseConfig = {
-  apiKey: process.env.REACT_APP_API_KEY,
-  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  apiKey: 'AIzaSyC4lXv7lcMR8TJNekZetQA6DoICzBAJU7M',
+  authDomain: 'game-7b666.firebaseapp.com',
   // need to fix this ↓
-  databaseURL: 'game-7b666-default-rtdb.europe-west1.firebasedatabase.app',
-  projectId: process.env.REACT_APP_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_MESSAGEING_SENDING_ID,
-  appId: process.env.REACT_APP_APP_ID,
+  databaseURL: 'https://game-7b666-default-rtdb.europe-west1.firebasedatabase.app',
+  projectId: 'game-7b666',
+  storageBucket: 'game-7b666.appspot.com',
+  messagingSenderId: '120251613719',
+  appId: '1:120251613719:web:02cfaf404559bdbdbe9252',
 };
 
 export default firebaseConfig;
