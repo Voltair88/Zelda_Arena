@@ -11,7 +11,6 @@ html,
 body {
   display: flex;
   justify-content: flex-start;
-  width: 100%;
   margin: auto auto;
   margin: 0;
   padding: 0;
@@ -31,6 +30,7 @@ body {
   background-color: #ffffff;
   height: 100%;
   min-width: 120px;
+  max-width: 200px;
 }
 
 .sidebar {
@@ -41,7 +41,6 @@ body {
   color: black;
   height: 100%;
   margin: auto 10px;
-  min-width: 120px;
 }
 #Highscore {
   display: flex;
@@ -66,5 +65,12 @@ h1 {
   font-weight: bold;
   margin: 0;
   padding: 0;
+}
 
+.contactInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 100%;
+  bottom: 10px;
 }
