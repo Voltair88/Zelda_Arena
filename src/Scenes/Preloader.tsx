@@ -29,8 +29,10 @@ export default class Preloader extends Phaser.Scene {
     // Load the sounds
     this.load.audio('link_death', 'Assets/sound/hero_dying.ogg');
     this.load.audio('link_hurt', 'Assets/sound/hero_hurt.ogg');
-    this.load.audio('walking', 'Assets/sound/walk_on_grass.ogg');
     this.load.audio('bow', 'Assets/sound/bow.ogg');
+    this.load.audio('titleScreenMusic', 'Assets/music/title_screen.ogg');
+    this.load.audio('gameOver', 'Assets/music/game_over.ogg');
+    this.load.audio('castle', 'Assets/music/castle.ogg');
   }
 
   create() {

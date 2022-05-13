@@ -5,6 +5,7 @@ import characterName from '../components/characterName';
 import { auth, database } from '../Firebase/firebase';
 
 export default class GameOverScene extends Phaser.Scene {
+  gameOverMusic?: Phaser.Sound.BaseSound;
   private Score = 0;
 
   constructor() {
@@ -13,7 +14,8 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     const gamescene = this.scene.get('Game');
-
+    this.gameOverMusic = this.sound.add('gameOver', { volume: 0.5, loop: true });
+    this.gameOverMusic.play();
     // Game over scene
     this.add.rectangle(gamescene.cameras.main.width / 2, gamescene.cameras.main.height / 2.3, 800, 600, 0xf3f3f3, 0.5);
 
@@ -86,6 +88,7 @@ export default class GameOverScene extends Phaser.Scene {
     restartButton.on('pointerdown', () => {
       this.scene.start('Preloader');
       sceneEvents.emit('resetScore');
+      this.gameOverMusic?.stop();
     });
   }
 

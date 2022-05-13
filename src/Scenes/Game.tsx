@@ -16,10 +16,15 @@ export default class Game extends Phaser.Scene {
   private arrows!: Phaser.Physics.Arcade.Group;
   private hit = 0;
   private Score = 0;
+  private moving = false;
+  private shoting = false;
+
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
   linkWalkingSound?: Phaser.Sound.BaseSound;
   linkBowSound?: Phaser.Sound.BaseSound;
+  castle?: Phaser.Sound.BaseSound;
+
   constructor() {
     super({ key: 'Game' });
   }
@@ -33,7 +38,6 @@ export default class Game extends Phaser.Scene {
   public create(): void {
     // load Game UI
     this.scene.run('GameUI');
-
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
     const tileset = map.addTilesetImage('light_world', 'tiles', 8, 8, 0, 0);
@@ -47,8 +51,11 @@ export default class Game extends Phaser.Scene {
     // load sound effects
     this.linkDeathSound = this.sound.add('link_death');
     this.linkHurtSound = this.sound.add('link_hurt');
-    this.linkWalkingSound = this.sound.add('walking');
     this.linkBowSound = this.sound.add('bow');
+
+    // load Music and play it
+    this.castle = this.sound.add('castle', { volume: 0.5, loop: true });
+    this.castle.play();
 
     // create the player
     this.Link = this.add.Link(400, 100, 'Link');
@@ -164,6 +171,7 @@ export default class Game extends Phaser.Scene {
       this.linkDeathSound?.play();
       this.Link.anims.play('link-dying').once('animationcomplete', () => {
         this.scene.run('GameOver');
+        this.castle?.stop();
       });
     }
     sceneEvents.emit('player-health-changed', this.Link.health);
@@ -187,8 +195,6 @@ export default class Game extends Phaser.Scene {
       this.Link.anims.currentAnim.key === 'bow-up' ||
       this.Link.anims.currentAnim.key === 'bow-left' ||
       this.Link.anims.currentAnim.key === 'bow-right';
-    let moving = false;
-    let shoting = false;
 
     if (this.hit > 0) {
       this.hit += 1;
@@ -197,65 +203,62 @@ export default class Game extends Phaser.Scene {
       }
       return;
     }
+
     if (this.input.keyboard && this.Link.health >= 1) {
       if (up) {
         this.Link.anims.play('walk-up', true);
         this.Link.setVelocity(0, -100);
-        moving = true;
+        this.moving = true;
       } else if (down) {
         this.Link.anims.play('walk-down', true);
         this.Link.setVelocity(0, 100);
-        moving = true;
+        this.moving = true;
       } else if (left) {
         this.Link.anims.play('walk-left', true);
         this.Link.setVelocity(-100, 0);
-        moving = true;
+        this.moving = true;
       } else if (right) {
         this.Link.anims.play('walk-right', true);
         this.Link.setVelocity(100, 0);
-        moving = true;
+        this.moving = true;
       } else {
         // put the Link in idle animation
         if (walkingDown) {
           this.Link.anims.play('idle-down', true);
-          moving = false;
+          this.moving = false;
         } else if (walkingUp) {
           this.Link.anims.play('idle-up', true);
-          moving = false;
+          this.moving = false;
         } else if (walkingLeft) {
           this.Link.anims.play('idle-left', true);
-          moving = false;
+          this.moving = false;
         } else if (walkingRight) {
           this.Link.anims.play('idle-right', true);
-          moving = false;
+          this.moving = false;
         }
         this.Link.setVelocity(0, 0);
       }
       // when pressing E or SPACE load the bow anims depending on the direction the player is facing
-      if (bow && !moving && !shoting) {
-        this.Link.anims.stopAfterRepeat();
+      if (bow && !this.moving && !this.shoting) {
+        this.shoting = true;
         if (idleDown) {
-          shoting = true;
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-down', true);
             this.Link.shootArrow();
             this.linkBowSound?.play();
           });
-          shoting = false;
         } else if (idleUp) {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-up', true);
             this.Link.shootArrow();
             this.linkBowSound?.play();
           });
-          shoting = false;
         } else if (idleLeft) {
           this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-left', true);
             this.Link.shootArrow();
             this.linkBowSound?.play();
           });
-          shoting = false;
         } else if (idleRight) {
           this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-right', true);
@@ -263,6 +266,7 @@ export default class Game extends Phaser.Scene {
             this.linkBowSound?.play();
           });
         }
+        this.shoting = false;
       }
       if (isShooting) {
         this.Link.setVelocity(0, 0);
