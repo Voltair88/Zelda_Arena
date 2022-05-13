@@ -1,6 +1,8 @@
 import Phaser from 'phaser';
+import { sceneEvents } from 'Event';
 
 export default class TitleScene extends Phaser.Scene {
+  private Score = 0;
   constructor() {
     super({ key: 'TitleScene' });
   }
@@ -19,6 +21,7 @@ export default class TitleScene extends Phaser.Scene {
     startButton.setInteractive();
     startButton.on('pointerdown', () => {
       this.scene.start('Preloader');
+      sceneEvents.emit('resetScore');
     });
   }
 }

@@ -1,6 +1,5 @@
 import Phaser from 'phaser';
 import { ref, set, onValue } from 'firebase/database';
-import { onAuthStateChanged } from 'firebase/auth';
 import { sceneEvents } from 'Event';
 import { allPlayersRef, auth, database } from '../Firebase/firebase';
 
@@ -13,6 +12,7 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     const gamescene = this.scene.get('Game');
+    console.log(this.Score);
 
     // Highscore
 
@@ -80,6 +80,7 @@ export default class GameOverScene extends Phaser.Scene {
     submitScore.setOrigin(0.5, 0.5);
     submitScore.setInteractive();
     submitScore.on('pointerdown', () => {
+      // promt the user to enter their name
       sceneEvents.on('submitScore', (score: number) => {
         this.Score = score;
       });
@@ -89,9 +90,10 @@ export default class GameOverScene extends Phaser.Scene {
         set(ref(database, `players/${playerId}`), {
           score: this.Score,
         });
+        console.log(this.Score);
       }
       submitScore.text = 'Score submitted!';
-      submitScore.setInteractive(false);
+      // submitScore.setInteractive(false);
     });
 
     // Restart the game
@@ -118,4 +120,6 @@ export default class GameOverScene extends Phaser.Scene {
       sceneEvents.emit('resetScore');
     });
   }
+
+  update() {}
 }

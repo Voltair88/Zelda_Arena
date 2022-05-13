@@ -20,3 +20,18 @@ body {
   -ms-interpolation-mode: nearest-neighbor;    /* IE (non standard naming) */
   image-rendering: pixelated;                  /* Chrome 41 */
 }
+
+#root {
+  z-index: 2;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: auto auto;
+}
+
+canvas {
+  z-index: 1;
+}

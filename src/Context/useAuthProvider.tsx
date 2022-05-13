@@ -11,7 +11,7 @@ export default function AuthProvider({ children }: Props) {
   // sign in anonymously
   signInAnonymously(auth)
     .then(() => {
-      console.log(auth.currentUser);
+      console.log(auth.currentUser?.uid);
       // Signed in..
     })
     .catch((error) => {

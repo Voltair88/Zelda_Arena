@@ -108,12 +108,19 @@ export default class Game extends Phaser.Scene {
       undefined,
       this
     );
+
+    sceneEvents.on('resetScore', (score: number) => {
+      this.Score = 0;
+    });
   }
   private handleArrowsEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
-    obj1.destroy();
-    obj2.destroy();
+    const arrow = obj1 as Phaser.Physics.Arcade.Image;
+    const enemy = obj2 as GreenSoldier;
+    arrow.destroy();
+    enemy.destroy();
     this.Score += 1;
     sceneEvents.emit('scoreChanged', this.Score);
+    sceneEvents.emit('submitScore', this.Score);
     console.log(this.Score);
 
     const spawnEnemy = this.greenSoldiers.get(
@@ -147,19 +154,14 @@ export default class Game extends Phaser.Scene {
     if (this.Link.health >= 1) {
       this.linkHurtSound?.play();
     } else if (this.Link.health < 1) {
-      sceneEvents.emit('submitScore', this.Score);
-      this.scene.run('GameOver');
       this.PlayerEnemysCollision?.destroy();
       this.Link.setVelocity(0, 0);
-      this.Link.anims.play('link-dying');
       this.linkDeathSound?.play();
+      this.Link.anims.play('link-dying').once('animationcomplete', () => {
+        this.scene.run('GameOver');
+      });
     }
     sceneEvents.emit('player-health-changed', this.Link.health);
-    sceneEvents.emit('submitScore', this.Score);
-
-    sceneEvents.on('resetScore', (score: number) => {
-      this.Score = 0;
-    });
   }
   public update(): void {
     const up = this.cursors.up.isDown;

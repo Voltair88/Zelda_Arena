@@ -7,7 +7,8 @@ import AuthProvider from 'Context/useAuthProvider';
 function App() {
   return (
     <AuthProvider>
-      <div className="App" />
+      <Username />
+      <div id="phaser-game" />
     </AuthProvider>
   );
 }

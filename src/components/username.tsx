@@ -27,9 +27,10 @@ export default function Username() {
         });
 
         // sets the name of the player in the local storage
-        localStorage.setItem('name', name);
       }
     });
+    // reset name state
+    setName('');
   };
 
   // renders the component
@@ -38,7 +39,7 @@ export default function Username() {
       <form onSubmit={handleSubmit}>
         <label title="Name" htmlFor="Name">
           Name:
-          <input type="text" name="name" value={name} maxLength={20} onChange={handleName} />
+          <input type="text" name="name" value={name} maxLength={20} minLength={3} onChange={handleName} />
         </label>
         <input type="submit" value="Submit" />
       </form>
