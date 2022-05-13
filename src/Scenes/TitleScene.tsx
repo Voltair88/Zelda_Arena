@@ -25,13 +25,6 @@ export default class TitleScene extends Phaser.Scene {
     startButton.on('pointerdown', () => {
       this.scene.start('Preloader');
       sceneEvents.emit('resetScore');
-      if (auth.currentUser) {
-        const playerId = auth.currentUser.uid;
-        set(ref(database, `players/${playerId}`), {
-          name: characterName,
-          score: this.Score,
-        });
-      }
     });
   }
 }

@@ -21,6 +21,7 @@ export default class Preloader extends Phaser.Scene {
 
     // Load the enemy
     this.load.atlas('green_soldier', 'Assets/enemies/green_soldier.png', 'Assets/enemies/green_soldier.json');
+    this.load.atlas('enemyKilled', 'Assets/enemies/enemyKilled.png', 'Assets/enemies/enemyKilled.json');
     // Load the UI
     this.load.image('ui-heart-empty', 'Assets/ui/ui_heart_empty.png');
     this.load.image('ui-heart-full', 'Assets/ui/ui_heart_full.png');

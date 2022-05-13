@@ -1,13 +1,16 @@
 import Phaser from 'phaser';
-import { player, linkBow, greenSoldier, linkDying } from 'Animations';
+import { player, linkBow, greenSoldier, linkDying, enemyKilled } from 'Animations';
 import { sceneEvents } from 'Event';
+import GreenSoldierKilled from 'enemies/greenSoldierKilled';
 import Link from '../Player/Link';
 import '../Player/Link';
 import GreenSoldier from '../enemies/greenSoldier';
+import '../enemies/greenSoldierKilled';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
+  private GreenSoldierKilled!: GreenSoldierKilled;
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private arrows!: Phaser.Physics.Arcade.Group;
@@ -71,6 +74,7 @@ export default class Game extends Phaser.Scene {
     player(this.anims);
     linkBow(this.anims);
     linkDying(this.anims);
+    enemyKilled(this.anims);
     this.Link.anims.play('idle-down');
     this.Link.setArrows(this.arrows);
 
@@ -117,15 +121,18 @@ export default class Game extends Phaser.Scene {
     const enemy = obj2 as GreenSoldier;
     arrow.destroy();
     enemy.destroy();
+    const killed = this.add.GreenSoldierKilled(enemy.x, enemy.y, 'enemyKilled');
+    killed.anims.play('enemyKilled').once('animationcomplete', () => {
+      killed.destroy();
+      const spawnEnemy = this.greenSoldiers.get(
+        Phaser.Math.Between(120, 600),
+        Phaser.Math.Between(80, 320),
+        'green_soldier'
+      );
+    });
     this.Score += 1;
     sceneEvents.emit('scoreChanged', this.Score);
     sceneEvents.emit('submitScore', this.Score);
-
-    const spawnEnemy = this.greenSoldiers.get(
-      Phaser.Math.Between(120, 600),
-      Phaser.Math.Between(80, 320),
-      'green_soldier'
-    );
   }
 
   public handleArrowWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject): void {
