@@ -1,7 +1,8 @@
 import Phaser from 'phaser';
-import { ref, set, onValue } from 'firebase/database';
+import { ref, set, get, getDatabase, child } from 'firebase/database';
 import { sceneEvents } from 'Event';
-import { allPlayersRef, auth, database } from '../Firebase/firebase';
+import characterName from '../components/characterName';
+import { auth, database } from '../Firebase/firebase';
 
 export default class GameOverScene extends Phaser.Scene {
   private Score = 0;
@@ -13,38 +14,6 @@ export default class GameOverScene extends Phaser.Scene {
   create() {
     const gamescene = this.scene.get('Game');
     console.log(this.Score);
-
-    // Highscore
-
-    const HighScoreContainer = this.add.rectangle(
-      gamescene.cameras.main.width / 10,
-      gamescene.cameras.main.height / 2,
-      350,
-      600,
-      0xf3f3f3
-    );
-    // TODO: Needs testing
-    onValue(allPlayersRef, (snapshot) => {
-      const allPlayers = snapshot.val();
-      const allPlayersArray = Object.keys(allPlayers).map((key) => allPlayers[key]);
-      const allPlayersSorted = allPlayersArray.sort((a, b) => b.score - a.score);
-      const highscore = allPlayersSorted[0].score;
-      const highscoreLabel = this.add.text(
-        gamescene.cameras.main.width / 2 - 900,
-        gamescene.cameras.main.height / 4,
-        `Highscore: ${highscore}`,
-        {
-          fontFamily: '"Roboto", sans-serif',
-          fontSize: '56px',
-          stroke: '#0b0b0b',
-          strokeThickness: 2,
-          color: '#000000',
-          backgroundColor: '#66666626',
-        }
-      );
-      highscoreLabel.setScale(0.5);
-      highscoreLabel.setDepth(1);
-    });
 
     // Game over scene
     this.add.rectangle(gamescene.cameras.main.width / 2, gamescene.cameras.main.height / 2.3, 800, 600, 0xf3f3f3, 0.5);
@@ -88,6 +57,7 @@ export default class GameOverScene extends Phaser.Scene {
       if (auth.currentUser) {
         const playerId = auth.currentUser.uid;
         set(ref(database, `players/${playerId}`), {
+          name: characterName,
           score: this.Score,
         });
         console.log(this.Score);

@@ -15,8 +15,8 @@ const config: Phaser.Types.Core.GameConfig = {
   roundPixels: true,
   antialiasGL: false,
   scale: {
-    mode: Phaser.Scale.FIT,
-    autoCenter: Phaser.Scale.CENTER_BOTH,
+    mode: Phaser.Scale.HEIGHT_CONTROLS_WIDTH,
+    autoCenter: Phaser.Scale.CENTER_VERTICALLY,
   },
   dom: {
     createContainer: false,

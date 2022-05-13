@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { signInAnonymously } from 'firebase/auth';
-import { auth } from '../Firebase/firebase';
+import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
+import { ref, set, onDisconnect } from 'firebase/database';
+import { auth, database } from '../Firebase/firebase';
+import characterName from '../components/characterName';
 
 interface Props {
   children: React.ReactNode;

@@ -10,6 +10,10 @@ header {
 
 html,
 body {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  margin: auto auto;
   margin: 0;
   padding: 0;
      image-rendering: optimizeSpeed;              /* Older versions of FF */
@@ -21,17 +25,31 @@ body {
   image-rendering: pixelated;                  /* Chrome 41 */
 }
 
-#root {
-  z-index: 2;
-  position: fixed;
+.App {
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+
+  height: 100%;
+}
+
+.sidebar {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin: auto auto;
+  justify-content: start;
+  color: black;
+  height: 100%;
+  margin: auto 10px;
+
+}
+#Highscore {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  background-color: #ffffff;
+  color: black;
+  height: 100%;
 }
 
-canvas {
-  z-index: 1;
-}

@@ -5,7 +5,7 @@ import { auth, database } from '../Firebase/firebase';
 
 // function to change the name of the player
 
-export default function Username() {
+export function Username() {
   // uses the useState hook to set the username
   const [name, setName] = React.useState<string>('');
 
@@ -38,8 +38,15 @@ export default function Username() {
     <div>
       <form onSubmit={handleSubmit}>
         <label title="Name" htmlFor="Name">
-          Name:
-          <input type="text" name="name" value={name} maxLength={20} minLength={3} onChange={handleName} />
+          <input
+            placeholder="You'r name"
+            type="text"
+            name="name"
+            value={name}
+            maxLength={20}
+            minLength={3}
+            onChange={handleName}
+          />
         </label>
         <input type="submit" value="Submit" />
       </form>
