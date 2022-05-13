@@ -1,5 +1,8 @@
 import Phaser from 'phaser';
 import { sceneEvents } from 'Event';
+import { ref, set } from 'firebase/database';
+import { auth, database } from '../Firebase/firebase';
+import characterName from '../components/characterName';
 
 export default class TitleScene extends Phaser.Scene {
   private Score = 0;
@@ -22,6 +25,13 @@ export default class TitleScene extends Phaser.Scene {
     startButton.on('pointerdown', () => {
       this.scene.start('Preloader');
       sceneEvents.emit('resetScore');
+      if (auth.currentUser) {
+        const playerId = auth.currentUser.uid;
+        set(ref(database, `players/${playerId}`), {
+          name: characterName,
+          score: this.Score,
+        });
+      }
     });
   }
 }

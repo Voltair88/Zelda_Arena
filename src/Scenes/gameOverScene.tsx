@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { ref, set, get, getDatabase, child } from 'firebase/database';
+import { ref, set } from 'firebase/database';
 import { sceneEvents } from 'Event';
 import characterName from '../components/characterName';
 import { auth, database } from '../Firebase/firebase';
@@ -13,7 +13,6 @@ export default class GameOverScene extends Phaser.Scene {
 
   create() {
     const gamescene = this.scene.get('Game');
-    console.log(this.Score);
 
     // Game over scene
     this.add.rectangle(gamescene.cameras.main.width / 2, gamescene.cameras.main.height / 2.3, 800, 600, 0xf3f3f3, 0.5);
@@ -60,7 +59,6 @@ export default class GameOverScene extends Phaser.Scene {
           name: characterName,
           score: this.Score,
         });
-        console.log(this.Score);
       }
       submitScore.text = 'Score submitted!';
       submitScore.setInteractive(false);

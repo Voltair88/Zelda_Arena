@@ -4,7 +4,6 @@ import { sceneEvents } from 'Event';
 import Link from '../Player/Link';
 import '../Player/Link';
 import GreenSoldier from '../enemies/greenSoldier';
-import { auth } from '../Firebase/firebase';
 
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -121,7 +120,6 @@ export default class Game extends Phaser.Scene {
     this.Score += 1;
     sceneEvents.emit('scoreChanged', this.Score);
     sceneEvents.emit('submitScore', this.Score);
-    console.log(this.Score);
 
     const spawnEnemy = this.greenSoldiers.get(
       Phaser.Math.Between(120, 600),

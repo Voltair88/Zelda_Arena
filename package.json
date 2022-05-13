@@ -13,10 +13,6 @@
     "eslint-config-react-app": "^7.0.0",
     "firebase": "^9.6.10",
     "phaser": "^3.55.2",
-    "phaser-plugin-loader": "^1.1.0",
-    "phaser-tilemap-plus": "^0.10.2",
-    "phaser3-rex-plugins": "^1.1.68",
-    "phaser3-weapon-plugin": "^2.2.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "typescript": "^4.6.3",
@@ -42,7 +38,6 @@
     ]
   },
   "devDependencies": {
-    "react-scripts": "^5.0.1",
     "@commitlint/cli": "^16.2.3",
     "@commitlint/config-conventional": "^16.2.1",
     "@typescript-eslint/eslint-plugin": "^5.23.0",
@@ -54,7 +49,8 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "prettier": "^2.6.1",
-    "prettier-eslint": "^13.0.0"
+    "prettier-eslint": "^13.0.0",
+    "react-scripts": "^5.0.1"
   },
   "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
   "main": "commitlint.config.js",
