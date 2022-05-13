@@ -10,7 +10,7 @@ export function Highscore() {
     const highScores = document.getElementById('Highscore') as HTMLElement;
     highScores.innerHTML = '';
     allPlayersSorted.forEach((player) => {
-      const playerElement = document.createElement('div');
+      const playerElement = document.createElement('p');
       playerElement.innerHTML = `${player.name}`;
       playerElement.innerHTML += ` ${player.score}`;
       highScores.appendChild(playerElement);
