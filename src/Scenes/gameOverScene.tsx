@@ -63,7 +63,7 @@ export default class GameOverScene extends Phaser.Scene {
         console.log(this.Score);
       }
       submitScore.text = 'Score submitted!';
-      // submitScore.setInteractive(false);
+      submitScore.setInteractive(false);
     });
 
     // Restart the game

@@ -31,7 +31,6 @@ export default class Game extends Phaser.Scene {
   public create(): void {
     // load Game UI
     this.scene.run('GameUI');
-    this.scene.run('GameOver');
 
     // load the map and tileset and make the map
     const map = this.make.tilemap({ key: 'bg-overworld-light' });
