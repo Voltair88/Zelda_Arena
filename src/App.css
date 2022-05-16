@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Zelda;
+  src: url('Triforce.ttf');
+}
+
 header {
   display: flex;
   align-items: center;
@@ -25,6 +30,7 @@ body {
 }
 
 .App {
+  font-family: Zelda;
   display: flex;
   flex-direction: column;
   background-color: #ffffff;
