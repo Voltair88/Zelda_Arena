@@ -1,52 +1,48 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "linebreak-style": "off",
+    "lines-between-class-members": "off",
+    "object-curly-newline": "off",
+    "comma-dangle": "off",
+    "operator-linebreak": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 120,
+        "ignoreComments": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": "latest",
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react",
-        "@typescript-eslint"
-    ],
-    "rules": {
-        "import/no-unresolved": "off",
-        "import/extensions": "off",
-        "linebreak-style": "off",
-        "lines-between-class-members": "off",
-        "object-curly-newline": "off",
-        "comma-dangle": "off",
-        "operator-linebreak": "off",
-        "max-len": [
-            "error", {
-                "code": 120,
-                "ignoreComments": true,
-                "ignoreStrings": true,
-                "ignoreTemplateLiterals": true,
-                "ignoreRegExpLiterals": true
-            }
-        ],
-        "no-shadow": "off",
-        "@typescript-eslint/no-shadow": ["error", { "ignoreTypeValueShadow": true }],
-        "no-unused-vars": "off",
-        "import/prefer-default-export": "off",
-        "react/jsx-filename-extension": [2, { "extensions": [ ".js", ".jsx", ".ts", ".tsx" ] } ],
-        "no-console": "off",
-        "no-use-before-define": "off",
-        "no-useless-return": "off",
-        "no-empty": "off",
-        "import/no-duplicates": "off",
-        "no-duplicate-imports": "off",
-        "class-methods-use-this": "off"
-    }
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": ["error", { "ignoreTypeValueShadow": true }],
+    "no-unused-vars": "off",
+    "import/prefer-default-export": "off",
+    "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+    "no-console": "off",
+    "no-use-before-define": "off",
+    "no-useless-return": "off",
+    "no-empty": "off",
+    "import/no-duplicates": "off",
+    "no-duplicate-imports": "off",
+    "class-methods-use-this": "off",
+    "no-alert": "off"
+  }
 }

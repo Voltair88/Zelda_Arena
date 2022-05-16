@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { ref, set } from 'firebase/database';
 import { sceneEvents } from 'Event';
+import { useState } from 'react';
 import characterName from '../components/characterName';
 import { auth, database } from '../Firebase/firebase';
 
@@ -12,12 +13,21 @@ export default class GameOverScene extends Phaser.Scene {
     super({ key: 'GameOver' });
   }
 
+  public preload(): void {
+    sceneEvents.on('submitScore', (score: number) => {
+      this.Score = score;
+    });
+  }
+
   create() {
     const gamescene = this.scene.get('Game');
     this.gameOverMusic = this.sound.add('gameOver', { volume: 0.5, loop: true });
     this.gameOverMusic.play();
     // Game over scene
     this.add.rectangle(gamescene.cameras.main.width / 2, gamescene.cameras.main.height / 2.3, 800, 600, 0xf3f3f3, 0.5);
+    sceneEvents.on('submitScore', (score: number) => {
+      this.Score = score;
+    });
 
     // Game over text
     const gameOverText = this.add.text(
@@ -51,21 +61,22 @@ export default class GameOverScene extends Phaser.Scene {
     submitScore.setInteractive();
     submitScore.on('pointerdown', () => {
       // promt the user to enter their name
-      sceneEvents.on('submitScore', (score: number) => {
-        this.Score = score;
-      });
-      // Firebase updates the score of the player
-      if (auth.currentUser) {
-        const playerId = auth.currentUser.uid;
-        set(ref(database, `players/${playerId}`), {
-          name: characterName,
-          score: this.Score,
-        });
+      const playerName = prompt('Enter your name') || 'Guest';
+      if (playerName) {
+        // if the user enters a name
+        // add the score to firebase
+        if (auth.currentUser) {
+          const playerId = auth.currentUser.uid;
+          set(ref(database, `players/${playerId}`), {
+            name: playerName,
+            score: this.Score,
+          });
+          console.log(playerName, this.Score);
+        }
+        submitScore.text = 'Score submitted!';
+        submitScore.setInteractive(false);
       }
-      submitScore.text = 'Score submitted!';
-      submitScore.setInteractive(false);
     });
-
     // Restart the game
     const restartButton = this.add.text(
       gamescene.cameras.main.width / 2,

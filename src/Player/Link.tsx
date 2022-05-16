@@ -57,23 +57,29 @@ export default class Link extends Phaser.Physics.Arcade.Sprite {
     if (!this.arrows) {
       return;
     }
-
-    if (this.anims.currentAnim.key === 'idle-right') {
-      const arrowRight = this.arrows.get(this.x + 10, this.y + 6, 'arrow-right', 0) as Phaser.Physics.Arcade.Image;
-      arrowRight.setVelocity(200, 0);
-      arrowRight.setSize(0, 8);
-    } else if (this.anims.currentAnim.key === 'idle-left') {
-      const arrowLeft = this.arrows.get(this.x - 10, this.y + 6, 'arrow-left', 0) as Phaser.Physics.Arcade.Image;
-      arrowLeft.setVelocity(-200, 0);
-      arrowLeft.setSize(0, 8);
-    } else if (this.anims.currentAnim.key === 'idle-up') {
-      const arrowUp = this.arrows.get(this.x, this.y - 4, 'arrow-up', 0) as Phaser.Physics.Arcade.Image;
-      arrowUp.setVelocity(0, -200);
-      arrowUp.setSize(8, 0);
-    } else if (this.anims.currentAnim.key === 'idle-down') {
-      const arrowDown = this.arrows.get(this.x, this.y + 20, 'arrow-down', 0) as Phaser.Physics.Arcade.Image;
-      arrowDown.setVelocity(0, 200);
-      arrowDown.setSize(8, 0);
+    const moving =
+      this.anims.currentAnim.key === 'idle-down' ||
+      this.anims.currentAnim.key === 'idle-up' ||
+      this.anims.currentAnim.key === 'idle-left' ||
+      this.anims.currentAnim.key === 'idle-right';
+    if (moving) {
+      if (this.anims.currentAnim.key === 'idle-right') {
+        const arrowRight = this.arrows.get(this.x + 10, this.y + 6, 'arrow-right', 0) as Phaser.Physics.Arcade.Image;
+        arrowRight.setVelocity(200, 0);
+        arrowRight.setSize(0, 8);
+      } else if (this.anims.currentAnim.key === 'idle-left') {
+        const arrowLeft = this.arrows.get(this.x - 10, this.y + 6, 'arrow-left', 0) as Phaser.Physics.Arcade.Image;
+        arrowLeft.setVelocity(-200, 0);
+        arrowLeft.setSize(0, 8);
+      } else if (this.anims.currentAnim.key === 'idle-up') {
+        const arrowUp = this.arrows.get(this.x, this.y - 4, 'arrow-up', 0) as Phaser.Physics.Arcade.Image;
+        arrowUp.setVelocity(0, -200);
+        arrowUp.setSize(8, 0);
+      } else if (this.anims.currentAnim.key === 'idle-down') {
+        const arrowDown = this.arrows.get(this.x, this.y + 20, 'arrow-down', 0) as Phaser.Physics.Arcade.Image;
+        arrowDown.setVelocity(0, 200);
+        arrowDown.setSize(8, 0);
+      }
     }
   }
 

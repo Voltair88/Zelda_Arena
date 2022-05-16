@@ -10,14 +10,11 @@ import '../enemies/greenSoldierKilled';
 export default class Game extends Phaser.Scene {
   private cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
   private Link!: Link;
-  private GreenSoldierKilled!: GreenSoldierKilled;
   private greenSoldiers!: Phaser.Physics.Arcade.Group;
   private PlayerEnemysCollision?: Phaser.Physics.Arcade.Collider;
   private arrows!: Phaser.Physics.Arcade.Group;
   private hit = 0;
   private Score = 0;
-  private moving = false;
-  private shoting = false;
 
   linkDeathSound?: Phaser.Sound.BaseSound;
   linkHurtSound?: Phaser.Sound.BaseSound;
@@ -205,42 +202,33 @@ export default class Game extends Phaser.Scene {
     }
 
     if (this.input.keyboard && this.Link.health >= 1) {
-      if (up) {
+      if (up && !isShooting) {
         this.Link.anims.play('walk-up', true);
         this.Link.setVelocity(0, -100);
-        this.moving = true;
-      } else if (down) {
+      } else if (down && !isShooting) {
         this.Link.anims.play('walk-down', true);
         this.Link.setVelocity(0, 100);
-        this.moving = true;
-      } else if (left) {
+      } else if (left && !isShooting) {
         this.Link.anims.play('walk-left', true);
         this.Link.setVelocity(-100, 0);
-        this.moving = true;
-      } else if (right) {
+      } else if (right && !isShooting) {
         this.Link.anims.play('walk-right', true);
         this.Link.setVelocity(100, 0);
-        this.moving = true;
       } else {
         // put the Link in idle animation
         if (walkingDown) {
           this.Link.anims.play('idle-down', true);
-          this.moving = false;
         } else if (walkingUp) {
           this.Link.anims.play('idle-up', true);
-          this.moving = false;
         } else if (walkingLeft) {
           this.Link.anims.play('idle-left', true);
-          this.moving = false;
         } else if (walkingRight) {
           this.Link.anims.play('idle-right', true);
-          this.moving = false;
         }
         this.Link.setVelocity(0, 0);
       }
       // when pressing E or SPACE load the bow anims depending on the direction the player is facing
-      if (bow && !this.moving && !this.shoting) {
-        this.shoting = true;
+      if (bow) {
         if (idleDown) {
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
             this.Link.anims.play('idle-down', true);
@@ -266,7 +254,6 @@ export default class Game extends Phaser.Scene {
             this.linkBowSound?.play();
           });
         }
-        this.shoting = false;
       }
       if (isShooting) {
         this.Link.setVelocity(0, 0);
