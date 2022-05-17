@@ -33,6 +33,7 @@ export default class Preloader extends Phaser.Scene {
     this.load.audio('titleScreenMusic', 'Assets/music/title_screen.ogg');
     this.load.audio('gameOver', 'Assets/music/game_over.ogg');
     this.load.audio('castle', 'Assets/music/castle.ogg');
+    this.load.audio('enemykilled', 'Assets/sound/enemy_killed.ogg');
   }
 
   create() {

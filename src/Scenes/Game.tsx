@@ -21,6 +21,7 @@ export default class Game extends Phaser.Scene {
   linkWalkingSound?: Phaser.Sound.BaseSound;
   linkBowSound?: Phaser.Sound.BaseSound;
   castle?: Phaser.Sound.BaseSound;
+  enemykilled?: Phaser.Sound.BaseSound;
 
   constructor() {
     super({ key: 'Game' });
@@ -49,6 +50,7 @@ export default class Game extends Phaser.Scene {
     this.linkDeathSound = this.sound.add('link_death');
     this.linkHurtSound = this.sound.add('link_hurt');
     this.linkBowSound = this.sound.add('bow');
+    this.enemykilled = this.sound.add('enemykilled');
 
     // load Music and play it
     this.castle = this.sound.add('castle', { volume: 0.5, loop: true });
@@ -126,6 +128,7 @@ export default class Game extends Phaser.Scene {
     arrow.destroy();
     enemy.destroy();
     const killed = this.add.GreenSoldierKilled(enemy.x, enemy.y, 'enemyKilled');
+    this.enemykilled?.play();
     killed.anims.play('enemyKilled').once('animationcomplete', () => {
       killed.destroy();
       const spawnEnemy = this.greenSoldiers.get(
