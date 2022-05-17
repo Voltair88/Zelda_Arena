@@ -234,27 +234,31 @@ export default class Game extends Phaser.Scene {
       if (bow) {
         if (idleDown) {
           this.Link.anims.play('bow-down', true).once('animationcomplete', () => {
-            this.Link.anims.play('idle-down', true);
-            this.Link.shootArrow();
-            this.linkBowSound?.play();
+            this.Link.anims.play('idle-down', true).once('animationcomplete', () => {
+              this.Link.shootArrow();
+              this.linkBowSound?.play();
+            });
           });
         } else if (idleUp) {
           this.Link.anims.play('bow-up', true).once('animationcomplete', () => {
-            this.Link.anims.play('idle-up', true);
-            this.Link.shootArrow();
-            this.linkBowSound?.play();
+            this.Link.anims.play('idle-up', true).once('animationcomplete', () => {
+              this.Link.shootArrow();
+              this.linkBowSound?.play();
+            });
           });
         } else if (idleLeft) {
           this.Link.anims.play('bow-left', true).once('animationcomplete', () => {
-            this.Link.anims.play('idle-left', true);
-            this.Link.shootArrow();
-            this.linkBowSound?.play();
+            this.Link.anims.play('idle-left', true).once('animationcomplete', () => {
+              this.Link.shootArrow();
+              this.linkBowSound?.play();
+            });
           });
         } else if (idleRight) {
           this.Link.anims.play('bow-right', true).once('animationcomplete', () => {
-            this.Link.anims.play('idle-right', true);
-            this.Link.shootArrow();
-            this.linkBowSound?.play();
+            this.Link.anims.play('idle-right', true).once('animationcomplete', () => {
+              this.Link.shootArrow();
+              this.linkBowSound?.play();
+            });
           });
         }
       }

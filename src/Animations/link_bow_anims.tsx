@@ -12,7 +12,7 @@ export const linkBowAnims = (anims: Phaser.Animations.AnimationManager) => {
       end: 3,
       zeroPad: 0,
     }),
-    frameRate: 10,
+    frameRate: 12,
     repeat: 0,
   });
 
